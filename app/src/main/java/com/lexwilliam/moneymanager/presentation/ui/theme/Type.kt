@@ -1,4 +1,4 @@
-package com.lexwilliam.moneymanager.ui.theme
+package com.lexwilliam.moneymanager.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
