@@ -1,10 +1,9 @@
 package com.lexwilliam.moneymanager.presentation.model
 
-import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.domain.model.Report
 
-data class ReportPresentation(
+data class WalletPresentation(
     val id: Int = 0,
     val name: String,
-    val money: Double,
-    val reportType: ReportType
+    val reports: List<Report>
 )

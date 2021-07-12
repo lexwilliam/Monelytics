@@ -3,7 +3,7 @@ package com.lexwilliam.moneymanager.presentation.ui.home
 import com.lexwilliam.moneymanager.domain.usecase.GetAllReportUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
+import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -45,5 +45,5 @@ class HomeViewModel
 }
 
 data class HomeViewState(
-    val reports: List<ReportPresentation> = emptyList()
+    val reports: List<WalletPresentation> = emptyList()
 )

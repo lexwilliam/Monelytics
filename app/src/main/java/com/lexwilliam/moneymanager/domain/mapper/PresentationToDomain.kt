@@ -1,4 +1,8 @@
 package com.lexwilliam.moneymanager.domain.mapper
 
-class PresentationToDomain {
+import com.lexwilliam.moneymanager.domain.model.Wallet
+import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+
+internal fun WalletPresentation.toDomain(): Wallet {
+    return Wallet(id, name, reports)
 }

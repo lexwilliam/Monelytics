@@ -1,7 +1,7 @@
 package com.lexwilliam.moneymanager.presentation.di
 
-import com.lexwilliam.moneymanager.data.dao.ReportDao
-import com.lexwilliam.moneymanager.data.repository.ReportRepository
+import com.lexwilliam.moneymanager.data.dao.WalletDao
+import com.lexwilliam.moneymanager.data.repository.WalletRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideReportRepository(reportDao: ReportDao): ReportRepository {
-        return ReportRepository(reportDao)
+    fun provideReportRepository(walletDao: WalletDao): WalletRepository {
+        return WalletRepository(walletDao)
     }
 
 }

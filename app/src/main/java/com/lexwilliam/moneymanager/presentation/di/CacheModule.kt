@@ -2,8 +2,8 @@ package com.lexwilliam.moneymanager.presentation.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lexwilliam.moneymanager.data.ReportDatabase
-import com.lexwilliam.moneymanager.data.dao.ReportDao
+import com.lexwilliam.moneymanager.data.WalletDatabase
+import com.lexwilliam.moneymanager.data.dao.WalletDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,11 +17,11 @@ object CacheModule {
 
     @Singleton
     @Provides
-    fun provideReportDb(@ApplicationContext context : Context): ReportDatabase {
+    fun provideReportDb(@ApplicationContext context : Context): WalletDatabase {
         return Room
             .databaseBuilder(
                 context,
-                ReportDatabase::class.java,
+                WalletDatabase::class.java,
                 "report_database"
             )
             .fallbackToDestructiveMigration()
@@ -30,8 +30,8 @@ object CacheModule {
 
     @Singleton
     @Provides
-    fun provideReportDAO(reportDatabase: ReportDatabase): ReportDao {
-        return reportDatabase.reportDao()
+    fun provideReportDAO(walletDatabase: WalletDatabase): WalletDao {
+        return walletDatabase.reportDao()
     }
 
 }

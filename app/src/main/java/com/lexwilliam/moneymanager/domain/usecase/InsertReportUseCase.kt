@@ -1,12 +1,13 @@
 package com.lexwilliam.moneymanager.domain.usecase
 
-import com.lexwilliam.moneymanager.data.repository.ReportRepository
+import com.lexwilliam.moneymanager.data.repository.WalletRepository
 import com.lexwilliam.moneymanager.domain.model.Report
+import com.lexwilliam.moneymanager.domain.model.Wallet
 import javax.inject.Inject
 
 class InsertReportUseCase
 @Inject constructor(
-    private val reportRepository: ReportRepository
+    private val walletRepository: WalletRepository
 ) {
-    suspend operator fun invoke(report: Report) = reportRepository.insertReport(report)
+    suspend operator fun invoke(wallet: Wallet) = walletRepository.insertWallet(wallet)
 }
