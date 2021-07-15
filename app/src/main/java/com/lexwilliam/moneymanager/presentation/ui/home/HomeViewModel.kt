@@ -1,8 +1,10 @@
 package com.lexwilliam.moneymanager.presentation.ui.home
 
 import com.lexwilliam.moneymanager.domain.usecase.GetAllReportUseCase
+import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
+import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel
 @Inject constructor(
+    private val getAllWalletUseCase: GetAllWalletUseCase,
     private val getAllReportUseCase: GetAllReportUseCase
 ): BaseViewModel() {
 
@@ -36,6 +39,10 @@ class HomeViewModel
     init {
         cacheJob?.cancel()
         cacheJob = launchCoroutine {
+            getAllWalletUseCase.invoke().collect { results ->
+                val wallets = results.map { it.toPresentation() }
+                _state.value = _state.value.copy(wallets = wallets)
+            }
             getAllReportUseCase.invoke().collect { results ->
                 val reports = results.map { it.toPresentation() }
                 _state.value = _state.value.copy(reports = reports)
@@ -45,5 +52,6 @@ class HomeViewModel
 }
 
 data class HomeViewState(
-    val reports: List<WalletPresentation> = emptyList()
+    val wallets: List<WalletPresentation> = emptyList(),
+    val reports: List<ReportPresentation> = emptyList()
 )

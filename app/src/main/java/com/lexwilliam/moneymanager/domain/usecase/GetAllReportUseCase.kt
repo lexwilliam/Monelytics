@@ -7,5 +7,5 @@ class GetAllReportUseCase
 @Inject constructor(
     private val walletRepository: WalletRepository
 ) {
-    suspend operator fun invoke() = walletRepository.getAllWallet()
+    suspend operator fun invoke() = walletRepository.getAllReport()
 }

@@ -1,8 +1,21 @@
 package com.lexwilliam.moneymanager.data.mapper
 
+import com.lexwilliam.moneymanager.data.model.ReportEntity
 import com.lexwilliam.moneymanager.data.model.WalletEntity
+import com.lexwilliam.moneymanager.domain.model.Report
 import com.lexwilliam.moneymanager.domain.model.Wallet
 
 internal fun Wallet.toEntity(): WalletEntity {
-    return WalletEntity(id, name, reports)
+    return WalletEntity(walletId, name)
+}
+
+internal fun Report.toEntity(): ReportEntity {
+    return ReportEntity(
+        reportId = reportId,
+        thisWalletId = thisWalletId,
+        timeAdded = timeAdded,
+        name = name,
+        money = money,
+        reportType = reportType
+    )
 }
