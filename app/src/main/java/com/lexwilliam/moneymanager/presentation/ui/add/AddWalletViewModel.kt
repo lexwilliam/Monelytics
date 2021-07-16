@@ -36,9 +36,9 @@ class AddWalletViewModel
         cacheJob = launchCoroutine {
             insertWalletUseCase.invoke(wallet.toDomain()).collect {
                 if(it == -1L) {
-                    Log.d("TAG", "Insert Successful")
-                } else {
                     Log.d("TAG", "Insert Failed")
+                } else {
+                    Log.d("TAG", "Insert Successful")
                 }
             }
         }

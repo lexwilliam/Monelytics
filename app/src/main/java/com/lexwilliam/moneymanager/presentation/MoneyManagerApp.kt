@@ -1,6 +1,7 @@
 package com.lexwilliam.moneymanager.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,11 +13,13 @@ import com.lexwilliam.moneymanager.presentation.ui.add.AddWalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.add.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
 
+@ExperimentalComposeUiApi
 @Composable
 fun MoneyManagerApp() {
     MoneyManagerContent()
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun MoneyManagerContent() {
     val navController = rememberNavController()

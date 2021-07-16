@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
+import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
 
 @Composable
 fun AddReportScreen(
@@ -54,24 +55,17 @@ fun AddReportContent(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
         )
 
-        Box(
-            modifier = Modifier
-                .shadow(8.dp, MaterialTheme.shapes.medium, true)
-                .padding(16.dp)
-                .fillMaxWidth()
-                .clickable {
-                    insertReport(
-                        ReportPresentation(
-                            name = nameText,
-                            money = moneyText.toDouble(),
-                            reportType = ReportType.Expense
-                        )
+        DoneButton(
+            onClick = {
+                insertReport(
+                    ReportPresentation(
+                        name = nameText,
+                        money = moneyText.toDouble(),
+                        reportType = ReportType.Expense
                     )
-                    navToHome()
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Done")
-        }
+                )
+                navToHome()
+            }
+        )
     }
 }
