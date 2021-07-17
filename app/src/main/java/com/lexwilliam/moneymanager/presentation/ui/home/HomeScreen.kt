@@ -1,10 +1,7 @@
 package com.lexwilliam.moneymanager
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -25,10 +22,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
-import com.lexwilliam.moneymanager.presentation.util.allWalletTotalBalance
-import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
-import com.lexwilliam.moneymanager.presentation.util.walletTotalBalance
+import com.lexwilliam.moneymanager.presentation.util.*
 
 
 @Composable
@@ -57,7 +53,10 @@ fun HomeContent(
     navToWalletDetail: (Int) -> Unit,
     navToReportDetail: (Int) -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         HomeTopAppBar(wallets = wallets)
         WalletCardRowList(wallets = wallets, navToWalletDetail = { navToWalletDetail(it) }, navToAddWallet = { navToAddWallet()})
         HistoryList(reports = reports, navToReportDetail = { navToReportDetail(it) })
@@ -75,7 +74,8 @@ fun HomeTopAppBar(wallets: List<WalletPresentation>) {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(1f)
+                    .fillMaxWidth()
+                    .weight(1f)
                     .height(48.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
@@ -83,7 +83,8 @@ fun HomeTopAppBar(wallets: List<WalletPresentation>) {
             }
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(1f)
+                    .fillMaxWidth()
+                    .weight(1f)
                     .height(48.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
@@ -105,7 +106,7 @@ fun WalletCardRowList(
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState()),
     ) {
-        Spacer(modifier = Modifier.padding(16.dp))
+        Spacer(modifier = Modifier.padding(8.dp))
         wallets.forEach { wallet ->
             WalletCard(modifier = Modifier.padding(end = 16.dp), wallet = wallet, navToWalletDetail = { navToWalletDetail(it) })
         }
@@ -121,30 +122,30 @@ fun WalletCard(
 ) {
     Box(
         modifier = modifier
-            .size(width = 135.dp, height = 150.dp)
+            .size(width = cardWidth, height = cardHeight)
             .shadow(4.dp, MaterialTheme.shapes.medium, clip = true)
-            .background(color = MaterialTheme.colors.primaryVariant)
+            .background(color = Color.White)
             .clickable { navToWalletDetail(wallet.walletId) },
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
-                .size(width = 125.dp, height = 140.dp)
-                .background(color = MaterialTheme.colors.primary)
+                .fillMaxSize()
+                .padding(16.dp)
                 .clip(MaterialTheme.shapes.medium)
         ) {
             Box(
-                modifier = Modifier.size(width = 125.dp, height = 70.dp).padding(16.dp),
+                modifier = Modifier.size(width = cardWidth, height = cardHeight/2),
                 contentAlignment = Alignment.TopStart
             ) {
-                Text(text = wallet.name, style = MaterialTheme.typography.caption, color = Color.White)
+                Text(text = wallet.name, style = MaterialTheme.typography.caption, color = Color.Black)
             }
             Box(
-                modifier = Modifier.size(width = 125.dp, height = 70.dp).padding(16.dp),
+                modifier = Modifier.size(width = cardWidth, height = cardHeight/2),
                 contentAlignment = Alignment.TopStart
             ) {
                 Column {
-                    Text(text = "$${walletTotalBalance(wallet)}", color = Color.White)
+                    Text(text = "$${walletTotalBalance(wallet)}", color = Color.Black)
                 }
             }
         }
@@ -157,7 +158,7 @@ fun AddWalletCard(
 ) {
     Box(
         modifier = Modifier
-            .size(width = 135.dp, height = 150.dp)
+            .size(width = cardWidth, height = cardHeight)
             .padding(end = 16.dp)
             .shadow(4.dp, MaterialTheme.shapes.medium, clip = true)
             .background(color = MaterialTheme.colors.secondaryVariant)
@@ -170,55 +171,6 @@ fun AddWalletCard(
             contentDescription = null,
             tint = Color.White
         )
-    }
-}
-
-@Composable
-fun HistoryList(
-    reports: List<ReportPresentation>,
-    navToReportDetail: (Int) -> Unit
-) {
-    if(reports.isNotEmpty()) {
-        val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded) }
-        groupedReports.keys.forEach { time ->
-            Text(text = time, style = MaterialTheme.typography.subtitle1)
-            groupedReports.values.forEach { groupOfReport ->
-                groupOfReport.forEach { report ->
-                    ReportRow(report = report) {
-                        navToReportDetail(it)
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ReportRow(
-    modifier: Modifier = Modifier,
-    report: ReportPresentation,
-    navToReportDetail: (Int) -> Unit
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable {
-                navToReportDetail(report.reportId)
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-        ) {
-            Text(text = report.name, style = MaterialTheme.typography.body2)
-            Text(text = report.thisWalletId.toString(), style = MaterialTheme.typography.overline)
-        }
-        when(report.reportType) {
-            ReportType.Income -> Text(text = "+${report.money}")
-            ReportType.Expense -> Text(text = "-${report.money}")
-            ReportType.Default -> Text(text = "?${report.money}")
-        }
     }
 }
 

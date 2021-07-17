@@ -1,9 +1,13 @@
 package com.lexwilliam.moneymanager.presentation.util
 
 import android.annotation.SuppressLint
+import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import java.text.SimpleDateFormat
 import java.util.*
+
+val cardWidth = 200.dp
+val cardHeight = 240.dp
 
 @SuppressLint("SimpleDateFormat")
 fun convertLongToTime(time: Long): String {

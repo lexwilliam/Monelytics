@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ fun DoneButton(
     Box(
         modifier = Modifier
             .shadow(8.dp, MaterialTheme.shapes.medium, true)
+            .background(color = MaterialTheme.colors.primary)
             .padding(16.dp)
             .fillMaxWidth()
             .clickable { onClick() },

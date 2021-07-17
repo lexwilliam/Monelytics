@@ -1,6 +1,7 @@
 package com.lexwilliam.moneymanager.presentation.ui.add
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.domain.usecase.InsertReportUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
@@ -18,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AddReportViewModel
 @Inject constructor(
-    private val insertReportUseCase: InsertReportUseCase
+    private val insertReportUseCase: InsertReportUseCase,
+
+    savedStateHandle: SavedStateHandle
 ): BaseViewModel() {
 
     override val coroutineExceptionHandler= CoroutineExceptionHandler { _, exception ->
@@ -32,14 +35,24 @@ class AddReportViewModel
         cacheJob?.cancel()
     }
 
+    private val walletIdFromArgs = savedStateHandle.get<Int>("wallet_id")
+
+    var walletId = MutableStateFlow(-1)
+
+    init {
+        walletIdFromArgs.let {
+            walletId.value = it!!
+        }
+    }
+
     fun insertReport(report: ReportPresentation) {
         cacheJob?.cancel()
         cacheJob = launchCoroutine {
             insertReportUseCase.invoke(report.toDomain()).collect {
                 if(it == -1L) {
-                    Log.d("TAG", "Update Successful")
-                } else {
                     Log.d("TAG", "Update Failed")
+                } else {
+                    Log.d("TAG", "Update Successful")
                 }
             }
         }

@@ -1,10 +1,11 @@
-package com.lexwilliam.moneymanager.presentation.ui.wallet
+package com.lexwilliam.moneymanager.presentation.ui.report
 
 import androidx.lifecycle.SavedStateHandle
-import com.lexwilliam.moneymanager.domain.usecase.GetWalletByIdUseCase
+import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.domain.usecase.GetReportByIdUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,9 +16,9 @@ import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
-class WalletViewModel
+class ReportViewModel
 @Inject constructor(
-    private val getWalletByIdUseCase: GetWalletByIdUseCase,
+    private val getReportByIdUseCase: GetReportByIdUseCase,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel() {
 
@@ -32,24 +33,23 @@ class WalletViewModel
         cacheJob?.cancel()
     }
 
-    private val walletIdFromArgs = savedStateHandle.get<Int>("wallet_id")
+    private val reportIdByArgs = savedStateHandle.get<Int>("report_id")
 
-    private val _state = MutableStateFlow(WalletViewState())
+    private val _state = MutableStateFlow(ReportViewState())
     val state = _state.asStateFlow()
 
     init {
-        cacheJob?.cancel()
-        cacheJob = launchCoroutine {
-            walletIdFromArgs.let {
-                getWalletByIdUseCase.invoke(it!!).collect { result ->
-                    val wallet = result.toPresentation()
-                    _state.value = _state.value.copy(wallet = wallet)
+        reportIdByArgs.let {
+            cacheJob?.cancel()
+            cacheJob = launchCoroutine {
+                getReportByIdUseCase.invoke(it!!).collect { report ->
+                    _state.value = _state.value.copy(report = report.toPresentation())
                 }
             }
         }
     }
 }
 
-data class WalletViewState(
-    val wallet: WalletPresentation = WalletPresentation(name = "", reports = emptyList())
+data class ReportViewState(
+    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, reportType = ReportType.Default)
 )

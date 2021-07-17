@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.home
 
+import android.util.Log
 import com.lexwilliam.moneymanager.domain.usecase.GetAllReportUseCase
 import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
@@ -26,26 +27,40 @@ class HomeViewModel
         val message = ExceptionHandler.parse(exception)
     }
 
-    private var cacheJob: Job? = null
+    private var walletJob: Job? = null
+    private var reportJob: Job? = null
 
     override fun onCleared() {
         super.onCleared()
-        cacheJob?.cancel()
+        walletJob?.cancel()
     }
 
     private var _state = MutableStateFlow(HomeViewState())
     val state = _state.asStateFlow()
 
     init {
-        cacheJob?.cancel()
-        cacheJob = launchCoroutine {
+        walletJob?.cancel()
+        walletJob = launchCoroutine {
             getAllWalletUseCase.invoke().collect { results ->
-                val wallets = results.map { it.toPresentation() }
-                _state.value = _state.value.copy(wallets = wallets)
+                if(results.isEmpty()) {
+                    Log.d("TAG", "Get All Wallet Failed")
+                } else {
+                    Log.d("TAG", "Get All Wallet Success")
+                    val wallets = results.map { it.toPresentation() }
+                    _state.value = _state.value.copy(wallets = wallets)
+                }
             }
+        }
+        reportJob?.cancel()
+        reportJob = launchCoroutine {
             getAllReportUseCase.invoke().collect { results ->
-                val reports = results.map { it.toPresentation() }
-                _state.value = _state.value.copy(reports = reports)
+                if(results.isEmpty()) {
+                    Log.d("TAG", "Get All Report Failed")
+                } else {
+                    Log.d("TAG", "Get All Report Success")
+                    val reports = results.map { it.toPresentation() }
+                    _state.value = _state.value.copy(reports = reports)
+                }
             }
         }
     }

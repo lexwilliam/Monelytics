@@ -1,14 +1,19 @@
 package com.lexwilliam.moneymanager.presentation.ui.add
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
@@ -17,11 +22,11 @@ import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
 @Composable
 fun AddWalletScreen(
     viewModel: AddWalletViewModel = viewModel(),
-    navToHome: () -> Unit
+    onBackPressed: () -> Unit
 ) {
      AddWalletContent(
          insertWallet = viewModel::insertWallet,
-         navToHome = { navToHome() }
+         onBackPressed = { onBackPressed() }
     )
 }
 
@@ -29,11 +34,15 @@ fun AddWalletScreen(
 @Composable
 fun AddWalletContent(
     insertWallet: (WalletPresentation) -> Unit,
-    navToHome: () -> Unit
+    onBackPressed: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    Column {
-        Text(text = "Add Wallet")
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(modifier = Modifier.padding(start = 32.dp, top = 64.dp), text = "Add Wallet", style = MaterialTheme.typography.h5)
         var nameText by remember { mutableStateOf("") }
         OutlinedTextField(
             value = nameText,
@@ -43,8 +52,11 @@ fun AddWalletContent(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {
                 keyboardController?.hide()
-            })
+            }),
+            label = { Text("Wallet Name") },
+            singleLine = true
         )
+
         DoneButton(
             onClick = {
                 insertWallet(
@@ -53,7 +65,7 @@ fun AddWalletContent(
                         reports = emptyList()
                     )
                 )
-                navToHome()
+                onBackPressed()
             }
         )
     }
