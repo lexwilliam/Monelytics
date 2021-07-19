@@ -51,5 +51,5 @@ class ReportViewModel
 }
 
 data class ReportViewState(
-    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, reportType = ReportType.Default)
+    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, reportType = ReportType.Default, timeAdded = 0)
 )

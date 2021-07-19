@@ -15,13 +15,13 @@ interface WalletDao {
 
     @Transaction
     @Query("SELECT * FROM wallet WHERE walletId LIKE :id")
-    suspend fun getWalletWithReportById(id: Int): WalletWithReport
+    fun getWalletWithReportById(id: Int): Flow<WalletWithReport>
 
-    @Query("SELECT * FROM wallet_report ORDER BY timeAdded")
+    @Query("SELECT * FROM wallet_report ORDER BY timeAdded DESC")
     fun getAllReport(): Flow<List<ReportEntity>>
 
     @Query("SELECT * FROM wallet_report WHERE reportId IS :reportId")
-    suspend fun getReportById(reportId: Int): ReportEntity
+    fun getReportById(reportId: Int): Flow<ReportEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWallet(wallet: WalletEntity): Long

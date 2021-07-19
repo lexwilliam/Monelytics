@@ -1,4 +1,4 @@
-package com.lexwilliam.moneymanager.presentation.ui.add
+package com.lexwilliam.moneymanager.presentation.ui.wallet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

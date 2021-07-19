@@ -9,10 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.lexwilliam.moneymanager.HomeScreen
-import com.lexwilliam.moneymanager.presentation.ui.add.AddReportScreen
-import com.lexwilliam.moneymanager.presentation.ui.add.AddReportViewModel
-import com.lexwilliam.moneymanager.presentation.ui.add.AddWalletScreen
-import com.lexwilliam.moneymanager.presentation.ui.add.AddWalletViewModel
+import com.lexwilliam.moneymanager.presentation.ui.report.AddReportScreen
+import com.lexwilliam.moneymanager.presentation.ui.report.AddReportViewModel
+import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletScreen
+import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
 import com.lexwilliam.moneymanager.presentation.ui.report.ReportScreen
 import com.lexwilliam.moneymanager.presentation.ui.report.ReportViewModel

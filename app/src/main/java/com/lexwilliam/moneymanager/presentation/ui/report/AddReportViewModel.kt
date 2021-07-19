@@ -1,8 +1,8 @@
-package com.lexwilliam.moneymanager.presentation.ui.add
+package com.lexwilliam.moneymanager.presentation.ui.report
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
-import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.domain.usecase.GetWalletByIdUseCase
 import com.lexwilliam.moneymanager.domain.usecase.InsertReportUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toDomain
@@ -12,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -20,7 +19,6 @@ import javax.inject.Inject
 class AddReportViewModel
 @Inject constructor(
     private val insertReportUseCase: InsertReportUseCase,
-
     savedStateHandle: SavedStateHandle
 ): BaseViewModel() {
 

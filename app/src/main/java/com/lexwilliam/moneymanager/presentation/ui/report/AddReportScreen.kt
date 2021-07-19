@@ -1,4 +1,4 @@
-package com.lexwilliam.moneymanager.presentation.ui.add
+package com.lexwilliam.moneymanager.presentation.ui.report
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -59,6 +59,7 @@ fun AddReportContent(
                 insertReport(
                     ReportPresentation(
                         thisWalletId = walletId,
+                        timeAdded = System.currentTimeMillis(),
                         name = nameText,
                         money = moneyText.toDouble(),
                         reportType = ReportType.Income

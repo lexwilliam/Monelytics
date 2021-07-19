@@ -1,4 +1,4 @@
-package com.lexwilliam.moneymanager.presentation.ui.add
+package com.lexwilliam.moneymanager.presentation.ui.wallet
 
 import android.util.Log
 import com.lexwilliam.moneymanager.domain.usecase.InsertReportUseCase

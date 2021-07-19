@@ -3,13 +3,14 @@ package com.lexwilliam.moneymanager.presentation.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
@@ -22,18 +23,16 @@ fun HistoryList(
 ) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 16.dp),
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded) }
-
-        groupedReports.keys.forEach { time ->
-            Text(text = time, style = MaterialTheme.typography.subtitle1)
-            groupedReports.values.forEach { groupOfReport ->
-                groupOfReport.forEach { report ->
-                    ReportRow(report = report) {
-                        navToReportDetail(it)
-                    }
+        Text(text = "Recent Transactions", style = MaterialTheme.typography.h6)
+        val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy") }
+        groupedReports.forEach { (time, groupOfReport) ->
+            Text(text = time, style = MaterialTheme.typography.subtitle2)
+            groupOfReport.forEach { report ->
+                ReportRow(report = report) {
+                    navToReportDetail(it)
                 }
             }
         }
@@ -48,24 +47,34 @@ fun ReportRow(
 ) {
     Row(
         modifier = modifier
-            .background(color = MaterialTheme.colors.secondaryVariant)
             .fillMaxWidth()
             .clickable {
                 navToReportDetail(report.reportId)
-            },
-        verticalAlignment = Alignment.CenterVertically
+            }
     ) {
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxWidth(1f)
+                .fillMaxWidth()
+                .weight(2f),
+            contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = report.name, style = MaterialTheme.typography.body2)
-            Text(text = report.thisWalletId.toString(), style = MaterialTheme.typography.overline)
+            Column(
+            ) {
+                Text(text = report.name, style = MaterialTheme.typography.subtitle1)
+                Text(text = report.thisWalletId.toString(), style = MaterialTheme.typography.overline)
+            }
         }
-        when(report.reportType) {
-            ReportType.Income -> Text(text = "+${report.money}")
-            ReportType.Expense -> Text(text = "-${report.money}")
-            ReportType.Default -> Text(text = "?${report.money}")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            when(report.reportType) {
+                ReportType.Income -> Text(text = "+${report.money}")
+                ReportType.Expense -> Text(text = "-${report.money}")
+                ReportType.Default -> Text(text = "?${report.money}")
+            }
         }
     }
 }

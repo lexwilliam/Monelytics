@@ -14,8 +14,9 @@ class WalletRepository(
     private val walletDao: WalletDao
 ): IWalletRepository {
     override suspend fun getWalletWithReportById(walletId: Int): Flow<Wallet> = flow {
-        val item = walletDao.getWalletWithReportById(walletId).toDomain()
-        emit(item)
+        walletDao.getWalletWithReportById(walletId).collect {
+            emit( it.toDomain() )
+        }
     }
 
     override suspend fun getAllReport(): Flow<List<Report>> = flow {
@@ -31,8 +32,9 @@ class WalletRepository(
     }
 
     override suspend fun getReportById(reportId: Int): Flow<Report> = flow {
-        val report = walletDao.getReportById(reportId).toDomain()
-        emit(report)
+        walletDao.getReportById(reportId).collect {
+            emit( it.toDomain() )
+        }
     }
 
     override suspend fun insertWallet(wallet: Wallet): Flow<Long> = flow {

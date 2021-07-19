@@ -2,12 +2,10 @@ package com.lexwilliam.moneymanager
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -57,42 +55,22 @@ fun HomeContent(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        HomeTopAppBar(wallets = wallets)
+        HomeTopAppBar()
         WalletCardRowList(wallets = wallets, navToWalletDetail = { navToWalletDetail(it) }, navToAddWallet = { navToAddWallet()})
         HistoryList(reports = reports, navToReportDetail = { navToReportDetail(it) })
     }
 }
 
 @Composable
-fun HomeTopAppBar(wallets: List<WalletPresentation>) {
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .height(48.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(text = "Total Balance", style = MaterialTheme.typography.subtitle1)
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .height(48.dp),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                Text(text = "$${allWalletTotalBalance(wallets)}", style = MaterialTheme.typography.h6)
+fun HomeTopAppBar() {
+    TopAppBar(
+        title = { Text(text = "Wallet") },
+        actions = {
+            IconButton(onClick = {  }) {
+                Icon(Icons.Default.Person, contentDescription = null)
             }
         }
-        Divider()
-    }
+    )
 }
 
 @Composable
@@ -131,21 +109,47 @@ fun WalletCard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
-                .clip(MaterialTheme.shapes.medium)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Box(
-                modifier = Modifier.size(width = cardWidth, height = cardHeight/2),
-                contentAlignment = Alignment.TopStart
+            Text(text = wallet.name, style = MaterialTheme.typography.subtitle1)
+            Text(text = "$${walletTotalBalance(wallet)}", style = MaterialTheme.typography.h4)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(text = wallet.name, style = MaterialTheme.typography.caption, color = Color.Black)
-            }
-            Box(
-                modifier = Modifier.size(width = cardWidth, height = cardHeight/2),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Column {
-                    Text(text = "$${walletTotalBalance(wallet)}", color = Color.Black)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(color = Color.Green),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(8.dp)
+                    ) {
+                        Text(text = "Income", style = MaterialTheme.typography.caption)
+                        Text(text = "+ $${getWalletIncome(wallet)}", style = MaterialTheme.typography.h6)
+                    }
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(color = Color.Red),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(8.dp)
+                    ) {
+                        Text(text = "Expense", style = MaterialTheme.typography.caption)
+                        Text(text = "- $${getWalletExpense(wallet)}", style = MaterialTheme.typography.h6)
+                    }
                 }
             }
         }
