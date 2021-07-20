@@ -6,19 +6,29 @@ import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
-import kotlin.time.days
 
-val cardWidth = 360.dp
-val cardHeight = 180.dp
+val cardWidth = 200.dp
+val cardHeight = 230.dp
 
 val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMM yyyy")
 
 @SuppressLint("SimpleDateFormat")
 fun convertLongToTime(time: Long, dateFormat: String): String {
     val date = Date(time)
-    val format = SimpleDateFormat(dateFormat)
-    return format.format(date)
+    val simpleFormat = SimpleDateFormat(dateFormat)
+    val result = simpleFormat.format(date)
+    val formatter = DateTimeFormatter.ofPattern(dateFormat)
+    val today = LocalDate.now().format(formatter)
+    val tomorrow = LocalDate.now().plus(1, ChronoUnit.DAYS).format(formatter)
+    when(result) {
+        today -> return "Today"
+        tomorrow -> return "Tomorrow"
+    }
+    return result
 }
 
 fun walletTotalBalance(wallet: WalletPresentation): Double {
@@ -59,7 +69,7 @@ fun getWalletExpense(wallet: WalletPresentation): Double {
     return totalMoney
 }
 
-fun convertIntToMoneyFormat(num: Double): String {
+fun convertDoubleToMoneyFormat(num: Double): String {
     val numberFormat = NumberFormat.getCurrencyInstance()
     return numberFormat.format(num)
 }

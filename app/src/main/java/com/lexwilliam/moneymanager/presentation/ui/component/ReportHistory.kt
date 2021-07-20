@@ -26,10 +26,9 @@ fun HistoryList(
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "Recent Transactions", style = MaterialTheme.typography.h6)
         val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy") }
         groupedReports.forEach { (time, groupOfReport) ->
-            Text(text = time, style = MaterialTheme.typography.subtitle2)
+            Text(text = time, style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
             groupOfReport.forEach { report ->
                 ReportRow(report = report) {
                     navToReportDetail(it)
