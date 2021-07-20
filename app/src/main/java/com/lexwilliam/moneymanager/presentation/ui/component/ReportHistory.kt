@@ -18,12 +18,12 @@ import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
 
 @Composable
 fun HistoryList(
+    modifier: Modifier = Modifier,
     reports: List<ReportPresentation>,
     navToReportDetail: (Int) -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy") }

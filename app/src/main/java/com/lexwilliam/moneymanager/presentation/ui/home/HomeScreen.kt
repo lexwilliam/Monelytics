@@ -58,7 +58,7 @@ fun HomeContent(
         HomeTopAppBar()
         TotalBalance(wallets = wallets)
         WalletCardRowList(wallets = wallets, navToWalletDetail = { navToWalletDetail(it) }, navToAddWallet = { navToAddWallet()})
-        HistoryList(reports = reports, navToReportDetail = { navToReportDetail(it) })
+        HistoryList(modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 54.dp), reports = reports, navToReportDetail = { navToReportDetail(it) })
     }
 }
 
