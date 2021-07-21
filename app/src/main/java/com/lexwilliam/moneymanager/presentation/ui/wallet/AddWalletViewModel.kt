@@ -24,18 +24,20 @@ class AddWalletViewModel
         val message = ExceptionHandler.parse(exception)
     }
 
-    private var cacheJob: Job? = null
+    private var walletJob: Job? = null
+    private var reportJob: Job? = null
 
     override fun onCleared() {
         super.onCleared()
-        cacheJob?.cancel()
+        walletJob?.cancel()
+        reportJob?.cancel()
     }
 
     fun insertWallet(
         wallet: WalletPresentation
     ) {
-        cacheJob?.cancel()
-        cacheJob = launchCoroutine {
+        walletJob?.cancel()
+        walletJob = launchCoroutine {
             insertWalletUseCase.invoke(wallet.toDomain()).collect {
                 if (it == -1L) {
                     Log.d("TAG", "Insert Failed")

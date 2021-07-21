@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
@@ -30,4 +31,12 @@ fun DoneButton(
     ) {
         Text(text = "Done")
     }
+}
+
+@Preview
+@Composable
+fun DoneButtonPreview() {
+    DoneButton(
+        onClick = {}
+    )
 }
