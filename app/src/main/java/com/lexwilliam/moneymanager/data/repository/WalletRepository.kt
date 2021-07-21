@@ -39,6 +39,7 @@ class WalletRepository(
 
     override suspend fun insertWallet(wallet: Wallet): Flow<Long> = flow {
         val affectedRow = walletDao.insertWallet(wallet.toEntity())
+        walletDao.insertReport(wallet.reports.first().toEntity())
         emit(affectedRow)
     }
 

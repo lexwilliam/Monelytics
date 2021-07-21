@@ -1,9 +1,7 @@
 package com.lexwilliam.moneymanager
 
-import android.icu.text.CaseMap
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -12,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -111,18 +108,39 @@ fun WalletCardRowList(
     navToWalletDetail: (Int) -> Unit,
     navToAddWallet: () -> Unit
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Spacer(modifier = Modifier.padding(4.dp))
-        wallets.forEach { wallet ->
-            WalletCard(wallet = wallet, navToWalletDetail = { navToWalletDetail(it) })
+    if(wallets.isEmpty()) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .height(cardHeight)
+                .fillMaxWidth()
+                .shadow(4.dp, MaterialTheme.shapes.medium, clip = true)
+                .background(color = Color.White)
+                .clickable { navToAddWallet() }
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Add Wallet", style = MaterialTheme.typography.h4)
+            }
         }
-        AddWalletCard { navToAddWallet() }
+    } else {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Spacer(modifier = Modifier.padding(4.dp))
+            wallets.forEach { wallet ->
+                WalletCard(wallet = wallet, navToWalletDetail = { navToWalletDetail(it) })
+            }
+            AddWalletCard { navToAddWallet() }
+        }
     }
+
 }
 
 @Composable

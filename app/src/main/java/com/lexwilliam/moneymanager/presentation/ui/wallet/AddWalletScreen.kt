@@ -2,6 +2,7 @@ package com.lexwilliam.moneymanager.presentation.ui.wallet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,8 +14,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
 
@@ -39,12 +43,13 @@ fun AddWalletContent(
     val keyboardController = LocalSoftwareKeyboardController.current
     Column(
         modifier = Modifier
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(modifier = Modifier.padding(start = 32.dp, top = 64.dp), text = "Add Wallet", style = MaterialTheme.typography.h5)
+        Text(modifier = Modifier.padding(top = 64.dp), text = "Add Wallet", style = MaterialTheme.typography.h3)
         var nameText by remember { mutableStateOf("") }
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = nameText,
             onValueChange = {
                 nameText = it
@@ -56,13 +61,33 @@ fun AddWalletContent(
             label = { Text("Wallet Name") },
             singleLine = true
         )
-
+        var balanceText by remember { mutableStateOf("") }
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = balanceText,
+            onValueChange = {
+                balanceText = it
+            },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+            keyboardActions = KeyboardActions(onDone = {
+                keyboardController?.hide()
+            }),
+            label = { Text("Current Balance") },
+            singleLine = true
+        )
         DoneButton(
             onClick = {
                 insertWallet(
                     WalletPresentation(
                         name = nameText,
-                        reports = emptyList()
+                        reports = listOf(
+                            ReportPresentation(
+                                timeAdded = System.currentTimeMillis(),
+                                name = "First Deposit",
+                                money = balanceText.toDouble(),
+                                reportType = ReportType.Income
+                            )
+                        )
                     )
                 )
                 onBackPressed()

@@ -14,7 +14,7 @@ import java.util.*
 import kotlin.math.exp
 
 val cardWidth = 200.dp
-val cardHeight = 230.dp
+val cardHeight = 270.dp
 
 val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMM yyyy", false)
 
