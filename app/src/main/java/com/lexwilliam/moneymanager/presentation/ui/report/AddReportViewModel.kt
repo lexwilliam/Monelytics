@@ -48,9 +48,9 @@ class AddReportViewModel
         cacheJob = launchCoroutine {
             insertReportUseCase.invoke(report.toDomain()).collect {
                 if(it == -1L) {
-                    Log.d("TAG", "Update Failed")
+                    Log.d("TAG", "Insert Failed")
                 } else {
-                    Log.d("TAG", "Update Successful")
+                    Log.d("TAG", "Insert Successful")
                 }
             }
         }

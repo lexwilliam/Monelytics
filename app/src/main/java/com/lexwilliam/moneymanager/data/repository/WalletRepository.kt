@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.data.repository
 
+import android.util.Log
 import com.lexwilliam.moneymanager.data.dao.WalletDao
 import com.lexwilliam.moneymanager.data.mapper.toDomain
 import com.lexwilliam.moneymanager.data.mapper.toEntity

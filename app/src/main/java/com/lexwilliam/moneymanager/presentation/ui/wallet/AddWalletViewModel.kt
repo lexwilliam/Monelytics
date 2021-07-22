@@ -11,14 +11,14 @@ import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
 class AddWalletViewModel
 @Inject constructor(
-    private val insertWalletUseCase: InsertWalletUseCase,
-    private val insertReportUseCase: InsertReportUseCase
+    private val insertWalletUseCase: InsertWalletUseCase
 ): BaseViewModel() {
 
     override val coroutineExceptionHandler= CoroutineExceptionHandler { _, exception ->
@@ -26,12 +26,10 @@ class AddWalletViewModel
     }
 
     private var walletJob: Job? = null
-    private var reportJob: Job? = null
 
     override fun onCleared() {
         super.onCleared()
         walletJob?.cancel()
-        reportJob?.cancel()
     }
 
     fun insertWallet(
@@ -40,21 +38,6 @@ class AddWalletViewModel
         walletJob?.cancel()
         walletJob = launchCoroutine {
             insertWalletUseCase.invoke(wallet.toDomain()).collect {
-                if (it == -1L) {
-                    Log.d("TAG", "Insert Failed")
-                } else {
-                    Log.d("TAG", "Insert Successful")
-                }
-            }
-        }
-    }
-
-    fun insertReport(
-        report: ReportPresentation
-    ) {
-        reportJob?.cancel()
-        reportJob = launchCoroutine {
-            insertReportUseCase.invoke(report.toDomain()).collect {
                 if (it == -1L) {
                     Log.d("TAG", "Insert Failed")
                 } else {

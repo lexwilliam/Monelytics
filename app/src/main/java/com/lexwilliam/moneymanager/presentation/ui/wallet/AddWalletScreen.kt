@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.wallet
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,6 @@ fun AddWalletScreen(
 ) {
      AddWalletContent(
          insertWallet = viewModel::insertWallet,
-         insertReport = viewModel::insertReport,
          onBackPressed = { onBackPressed() }
     )
 }
@@ -39,7 +39,6 @@ fun AddWalletScreen(
 @Composable
 fun AddWalletContent(
     insertWallet: (WalletPresentation) -> Unit,
-    insertReport: (ReportPresentation) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -63,34 +62,12 @@ fun AddWalletContent(
             label = { Text("Wallet Name") },
             singleLine = true
         )
-        var balanceText by remember { mutableStateOf("") }
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = balanceText,
-            onValueChange = {
-                balanceText = it
-            },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
-            keyboardActions = KeyboardActions(onDone = {
-                keyboardController?.hide()
-            }),
-            label = { Text("Current Balance") },
-            singleLine = true
-        )
         DoneButton(
             onClick = {
                 insertWallet(
                     WalletPresentation(
                         name = nameText,
                         reports = emptyList()
-                    )
-                )
-                insertReport(
-                    ReportPresentation(
-                        walletName = nameText,
-                        name = "First Deposit",
-                        money = balanceText.toDouble(),
-                        reportType = ReportType.Income
                     )
                 )
                 onBackPressed()
