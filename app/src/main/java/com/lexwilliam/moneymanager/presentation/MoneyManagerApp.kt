@@ -10,28 +10,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.lexwilliam.moneymanager.HomeScreen
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticScreen
 import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticViewModel
-import com.lexwilliam.moneymanager.presentation.ui.report.AddReportScreen
-import com.lexwilliam.moneymanager.presentation.ui.report.AddReportViewModel
-import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletScreen
-import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
 import com.lexwilliam.moneymanager.presentation.ui.profile.ProfileScreen
 import com.lexwilliam.moneymanager.presentation.ui.profile.ProfileViewModel
-import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringContent
 import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringScreen
 import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringViewModel
+import com.lexwilliam.moneymanager.presentation.ui.report.AddReportScreen
+import com.lexwilliam.moneymanager.presentation.ui.report.AddReportViewModel
 import com.lexwilliam.moneymanager.presentation.ui.report.ReportScreen
 import com.lexwilliam.moneymanager.presentation.ui.report.ReportViewModel
+import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletScreen
+import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletViewModel
+import com.mikepenz.iconics.compose.ExperimentalIconics
 
 @ExperimentalComposeUiApi
 @Composable
@@ -45,16 +47,17 @@ fun MoneyManagerContent() {
     val navController = rememberNavController()
 
     data class BottomNavItem(
-        val icon: ImageVector,
+        val iconOutlined: Int,
+        val iconFilled: Int,
         val route: String,
         val description: String
     )
 
     val bottomNavIcons = listOf(
-        BottomNavItem(Icons.Filled.Home, Screens.HomeScreen.route, "Home"),
-        BottomNavItem(Icons.Filled.Search, Screens.AnalyticScreen.route, "Analytic"),
-        BottomNavItem(Icons.Default.DateRange, Screens.RecurringScreen.route, "Recurring"),
-        BottomNavItem(Icons.Filled.Person, Screens.ProfileScreen.route, "Profile")
+        BottomNavItem(R.drawable.account_filled_balance_wallet_black_24dp, R.drawable.account_balance_wallet_black_24dp, Screens.HomeScreen.route, "Home"),
+        BottomNavItem(R.drawable.analytics_filled_black_24dp, R.drawable.analytics_black_24dp, Screens.AnalyticScreen.route, "Analytic"),
+        BottomNavItem(R.drawable.subscriptions_filled_black_24dp, R.drawable.subscriptions_black_24dp, Screens.RecurringScreen.route, "Recurring"),
+        BottomNavItem(R.drawable.settings_filled_black_24dp, R.drawable.settings_black_24dp, Screens.ProfileScreen.route, "Profile")
     )
 
     Scaffold(
@@ -68,7 +71,14 @@ fun MoneyManagerContent() {
 
                 bottomNavIcons.forEach { screen ->
                     BottomNavigationItem(
-                        icon = { Icon(screen.icon, contentDescription = null) },
+                        icon = {
+                            if(currentRoute?.hierarchy?.any { it.route == screen.route } == true) {
+                                Icon(painter = painterResource(id = screen.iconOutlined), contentDescription = null)
+                            } else {
+                                Icon(painter = painterResource(id = screen.iconFilled), contentDescription = null)
+                            }
+
+                        },
                         selected = currentRoute?.hierarchy?.any { it.route == screen.route } == true,
                         onClick = {
                             navController.navigate(screen.route) {

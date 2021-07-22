@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -15,11 +12,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
+import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoneyFormat
 import com.lexwilliam.moneymanager.presentation.util.walletTotalBalance
 
 @Composable
@@ -62,27 +64,21 @@ fun WalletContent(
 fun WalletTopAppBar(
     wallet: WalletPresentation
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .height(64.dp),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Text(text = wallet.name)
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .height(64.dp),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Text(text = "$${walletTotalBalance(wallet)}")
-        }
-    }
+    TopAppBar(
+        title = {
+            Column {
+                Text(text = wallet.name, style = MaterialTheme.typography.caption, color = Color.LightGray)
+                Text(text = convertDoubleToMoneyFormat(walletTotalBalance(wallet)))
+            }
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(painterResource(id = R.drawable.date_range_black_24dp), contentDescription = null)
+            }
+        },
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.onBackground
+    )
 }
 
 @Composable

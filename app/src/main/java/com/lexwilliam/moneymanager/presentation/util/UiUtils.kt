@@ -11,7 +11,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
-import kotlin.math.exp
 
 val cardWidth = 200.dp
 val cardHeight = 270.dp
@@ -45,17 +44,17 @@ fun getThisMonthSummary(wallets: List<WalletPresentation>): IncomeExpenseSummary
 }
 
 @SuppressLint("SimpleDateFormat")
-fun convertLongToTime(time: Long, dateFormat: String, todayTommorow: Boolean = true): String {
+fun convertLongToTime(time: Long, dateFormat: String, todayYesterday: Boolean = true): String {
     val date = Date(time)
     val simpleFormat = SimpleDateFormat(dateFormat)
     val result = simpleFormat.format(date)
-    if(todayTommorow == true) {
+    if(todayYesterday) {
         val formatter = DateTimeFormatter.ofPattern(dateFormat)
         val today = LocalDate.now().format(formatter)
-        val tomorrow = LocalDate.now().plus(1, ChronoUnit.DAYS).format(formatter)
+        val yesterday = LocalDate.now().minus(1, ChronoUnit.DAYS).format(formatter)
         when(result) {
             today -> return "Today"
-            tomorrow -> return "Tomorrow"
+            yesterday -> return "Yesterday"
         }
     }
     return result
