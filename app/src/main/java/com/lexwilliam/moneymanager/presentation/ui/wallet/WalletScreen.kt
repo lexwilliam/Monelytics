@@ -27,7 +27,7 @@ import com.lexwilliam.moneymanager.presentation.util.walletTotalBalance
 @Composable
 fun WalletScreen(
     viewModel: WalletViewModel = viewModel(),
-    navToAddReport: (Int) -> Unit,
+    navToAddReport: (String) -> Unit,
     navToReportDetail: (Int) -> Unit
 ) {
     val viewState by viewModel.state.collectAsState()
@@ -41,7 +41,7 @@ fun WalletScreen(
 @Composable
 fun WalletContent(
     wallet: WalletPresentation,
-    navToAddReport: (Int) -> Unit,
+    navToAddReport: (String) -> Unit,
     navToReportDetail: (Int) -> Unit
 ) {
     Column(
@@ -54,7 +54,7 @@ fun WalletContent(
             reports = wallet.reports,
             navToReportDetail = { navToReportDetail(it) }
         )
-        FloatingActionButton(onClick = { navToAddReport(wallet.walletId) }) {
+        FloatingActionButton(onClick = { navToAddReport(wallet.name) }) {
             Icon(Icons.Default.Add, contentDescription = null )
         }
     }

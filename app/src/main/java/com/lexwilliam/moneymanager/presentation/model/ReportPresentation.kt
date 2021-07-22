@@ -4,8 +4,8 @@ import com.lexwilliam.moneymanager.data.model.ReportType
 
 data class ReportPresentation(
     val reportId: Int = 0,
-    val thisWalletId: Int = 0,
-    val timeAdded: Long,
+    val walletName: String = "",
+    val timeAdded: Long = System.currentTimeMillis(),
     val name: String,
     val money: Double,
     val reportType: ReportType

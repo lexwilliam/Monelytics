@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.Flow
 interface WalletDao {
 
     @Transaction
-    @Query("SELECT * FROM wallet ORDER BY walletId")
+    @Query("SELECT * FROM wallet ORDER BY name")
     fun getAllWalletWithReport(): Flow<List<WalletWithReport>>
 
     @Transaction
-    @Query("SELECT * FROM wallet WHERE walletId LIKE :id")
-    fun getWalletWithReportById(id: Int): Flow<WalletWithReport>
+    @Query("SELECT * FROM wallet WHERE name LIKE :name")
+    fun getWalletWithReportByName(name: String): Flow<WalletWithReport>
 
     @Query("SELECT * FROM wallet_report ORDER BY timeAdded DESC")
     fun getAllReport(): Flow<List<ReportEntity>>

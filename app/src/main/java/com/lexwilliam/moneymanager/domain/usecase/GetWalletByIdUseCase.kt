@@ -7,5 +7,5 @@ class GetWalletByIdUseCase
 @Inject constructor(
     private val walletRepository: WalletRepository
 ) {
-    suspend operator fun invoke(walletId: Int) = walletRepository.getWalletWithReportById(walletId)
+    suspend operator fun invoke(walletName: String) = walletRepository.getWalletWithReportById(walletName)
 }

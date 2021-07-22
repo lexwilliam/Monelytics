@@ -27,7 +27,7 @@ fun ReportContent(
 ) {
     Column {
         Text(text = report.name)
-        Text(text = report.thisWalletId.toString())
+        Text(text = report.walletName)
         Text(text = report.money.toString())
         Text(text = report.timeAdded.toString())
         Text(text = report.reportType.toString())

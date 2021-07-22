@@ -6,13 +6,13 @@ import com.lexwilliam.moneymanager.domain.model.Report
 import com.lexwilliam.moneymanager.domain.model.Wallet
 
 internal fun Wallet.toEntity(): WalletEntity {
-    return WalletEntity(walletId, name)
+    return WalletEntity(name)
 }
 
 internal fun Report.toEntity(): ReportEntity {
     return ReportEntity(
         reportId = reportId,
-        thisWalletId = thisWalletId,
+        walletName = walletName,
         timeAdded = timeAdded,
         name = name,
         money = money,

@@ -8,7 +8,7 @@ interface IWalletRepository {
 
     suspend fun getAllWalletWithReport(): Flow<List<Wallet>>
 
-    suspend fun getWalletWithReportById(walletId: Int): Flow<Wallet>
+    suspend fun getWalletWithReportById(walletName: String): Flow<Wallet>
 
     suspend fun getAllReport(): Flow<List<Report>>
 

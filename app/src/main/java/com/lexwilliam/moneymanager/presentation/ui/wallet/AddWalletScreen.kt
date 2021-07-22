@@ -30,6 +30,7 @@ fun AddWalletScreen(
 ) {
      AddWalletContent(
          insertWallet = viewModel::insertWallet,
+         insertReport = viewModel::insertReport,
          onBackPressed = { onBackPressed() }
     )
 }
@@ -38,6 +39,7 @@ fun AddWalletScreen(
 @Composable
 fun AddWalletContent(
     insertWallet: (WalletPresentation) -> Unit,
+    insertReport: (ReportPresentation) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -80,14 +82,15 @@ fun AddWalletContent(
                 insertWallet(
                     WalletPresentation(
                         name = nameText,
-                        reports = listOf(
-                            ReportPresentation(
-                                timeAdded = System.currentTimeMillis(),
-                                name = "First Deposit",
-                                money = balanceText.toDouble(),
-                                reportType = ReportType.Income
-                            )
-                        )
+                        reports = emptyList()
+                    )
+                )
+                insertReport(
+                    ReportPresentation(
+                        walletName = nameText,
+                        name = "First Deposit",
+                        money = balanceText.toDouble(),
+                        reportType = ReportType.Income
                     )
                 )
                 onBackPressed()

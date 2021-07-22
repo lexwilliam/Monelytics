@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.flow
 class WalletRepository(
     private val walletDao: WalletDao
 ): IWalletRepository {
-    override suspend fun getWalletWithReportById(walletId: Int): Flow<Wallet> = flow {
-        walletDao.getWalletWithReportById(walletId).collect {
+    override suspend fun getWalletWithReportById(walletName: String): Flow<Wallet> = flow {
+        walletDao.getWalletWithReportByName(walletName).collect {
             emit( it.toDomain() )
         }
     }

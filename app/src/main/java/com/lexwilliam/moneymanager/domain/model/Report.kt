@@ -4,7 +4,7 @@ import com.lexwilliam.moneymanager.data.model.ReportType
 
 data class Report(
     val reportId: Int,
-    val thisWalletId: Int,
+    val walletName: String,
     val timeAdded: Long,
     val name: String,
     val money: Double,

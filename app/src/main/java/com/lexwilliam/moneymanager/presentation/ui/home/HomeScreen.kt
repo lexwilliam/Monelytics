@@ -26,7 +26,7 @@ import com.lexwilliam.moneymanager.presentation.util.*
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
     navToAddWallet: () -> Unit,
-    navToWalletDetail: (Int) -> Unit,
+    navToWalletDetail: (String) -> Unit,
     navToReportDetail: (Int) -> Unit
 ) {
     val viewState by viewModel.state.collectAsState()
@@ -45,7 +45,7 @@ fun HomeContent(
     wallets: List<WalletPresentation>,
     reports: List<ReportPresentation>,
     navToAddWallet: () -> Unit,
-    navToWalletDetail: (Int) -> Unit,
+    navToWalletDetail: (String) -> Unit,
     navToReportDetail: (Int) -> Unit
 ) {
     Column(
@@ -105,7 +105,7 @@ fun TotalBalance(
 @Composable
 fun WalletCardRowList(
     wallets: List<WalletPresentation>,
-    navToWalletDetail: (Int) -> Unit,
+    navToWalletDetail: (String) -> Unit,
     navToAddWallet: () -> Unit
 ) {
     if(wallets.isEmpty()) {
@@ -147,7 +147,7 @@ fun WalletCardRowList(
 fun WalletCard(
     modifier: Modifier = Modifier,
     wallet: WalletPresentation,
-    navToWalletDetail: (Int) -> Unit
+    navToWalletDetail: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -155,7 +155,7 @@ fun WalletCard(
             .wrapContentHeight()
             .shadow(4.dp, MaterialTheme.shapes.medium, clip = true)
             .background(color = Color.White)
-            .clickable { navToWalletDetail(wallet.walletId) }
+            .clickable { navToWalletDetail(wallet.name) }
     ) {
         Column(
             modifier = Modifier

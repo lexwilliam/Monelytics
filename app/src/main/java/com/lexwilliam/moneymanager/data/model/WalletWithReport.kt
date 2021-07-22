@@ -6,8 +6,8 @@ import androidx.room.Relation
 data class WalletWithReport(
     @Embedded val wallet: WalletEntity,
     @Relation(
-        parentColumn = "walletId",
-        entityColumn = "thisWalletId"
+        parentColumn = "name",
+        entityColumn = "walletName"
     )
     val reports: List<ReportEntity>
 )

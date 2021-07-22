@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
+import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoneyFormat
 import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
 
 @Composable
@@ -57,7 +58,7 @@ fun ReportRow(
             Column(
             ) {
                 Text(text = report.name, style = MaterialTheme.typography.subtitle1)
-                Text(text = report.thisWalletId.toString(), style = MaterialTheme.typography.overline)
+                Text(text = report.walletName, style = MaterialTheme.typography.overline)
             }
         }
         Box(
@@ -66,11 +67,7 @@ fun ReportRow(
                 .weight(1f),
             contentAlignment = Alignment.CenterEnd
         ) {
-            when(report.reportType) {
-                ReportType.Income -> Text(text = "+${report.money}")
-                ReportType.Expense -> Text(text = "-${report.money}")
-                ReportType.Default -> Text(text = "?${report.money}")
-            }
+            Text(text = convertDoubleToMoneyFormat(report.money))
         }
     }
 }

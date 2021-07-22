@@ -32,7 +32,7 @@ class WalletViewModel
         cacheJob?.cancel()
     }
 
-    private val walletIdFromArgs = savedStateHandle.get<Int>("wallet_id")
+    private val walletNameFromArgs = savedStateHandle.get<String>("wallet_name")
 
     private val _state = MutableStateFlow(WalletViewState())
     val state = _state.asStateFlow()
@@ -40,10 +40,12 @@ class WalletViewModel
     init {
         cacheJob?.cancel()
         cacheJob = launchCoroutine {
-            walletIdFromArgs.let {
-                getWalletByIdUseCase.invoke(it!!).collect { result ->
-                    val wallet = result.toPresentation()
-                    _state.value = _state.value.copy(wallet = wallet)
+            walletNameFromArgs.let {
+                if(it != "") {
+                    getWalletByIdUseCase.invoke(it!!).collect { result ->
+                        val wallet = result.toPresentation()
+                        _state.value = _state.value.copy(wallet = wallet)
+                    }
                 }
             }
         }

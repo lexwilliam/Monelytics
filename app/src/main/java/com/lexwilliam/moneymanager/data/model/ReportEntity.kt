@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "wallet_report")
 data class ReportEntity(
     @PrimaryKey(autoGenerate = true) val reportId: Int = 0,
-    val thisWalletId: Int,
+    val walletName: String,
     val timeAdded: Long,
     val name: String,
     val money: Double,

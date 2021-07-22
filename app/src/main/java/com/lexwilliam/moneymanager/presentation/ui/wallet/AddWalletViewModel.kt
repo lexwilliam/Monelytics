@@ -17,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddWalletViewModel
 @Inject constructor(
-    private val insertWalletUseCase: InsertWalletUseCase
+    private val insertWalletUseCase: InsertWalletUseCase,
+    private val insertReportUseCase: InsertReportUseCase
 ): BaseViewModel() {
 
     override val coroutineExceptionHandler= CoroutineExceptionHandler { _, exception ->
@@ -39,6 +40,21 @@ class AddWalletViewModel
         walletJob?.cancel()
         walletJob = launchCoroutine {
             insertWalletUseCase.invoke(wallet.toDomain()).collect {
+                if (it == -1L) {
+                    Log.d("TAG", "Insert Failed")
+                } else {
+                    Log.d("TAG", "Insert Successful")
+                }
+            }
+        }
+    }
+
+    fun insertReport(
+        report: ReportPresentation
+    ) {
+        reportJob?.cancel()
+        reportJob = launchCoroutine {
+            insertReportUseCase.invoke(report.toDomain()).collect {
                 if (it == -1L) {
                     Log.d("TAG", "Insert Failed")
                 } else {

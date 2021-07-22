@@ -105,9 +105,9 @@ fun MoneyManagerContent() {
                             Screens.ReportScreen.route.plus("/?report_id=$report_id")
                         )
                     },
-                    navToWalletDetail = { wallet_id ->
+                    navToWalletDetail = { wallet_name ->
                         navController.navigate(
-                            Screens.WalletScreen.route.plus("/?wallet_id=$wallet_id")
+                            Screens.WalletScreen.route.plus("/?wallet_name=$wallet_name")
                         )
                     },
                     navToAddWallet = {
@@ -118,19 +118,19 @@ fun MoneyManagerContent() {
 
             // WALLET SCREEN
             composable(
-                route = Screens.WalletScreen.route.plus("/?wallet_id={wallet_id}"),
+                route = Screens.WalletScreen.route.plus("/?wallet_name={wallet_name}"),
                 arguments = listOf(
-                    navArgument("wallet_id") {
-                        type = NavType.IntType
-                        defaultValue = -1
+                    navArgument("wallet_name") {
+                        type = NavType.StringType
+                        defaultValue = ""
                     }
                 )
             ) {
                 val walletViewModel = hiltViewModel<WalletViewModel>()
                 WalletScreen(
                     viewModel = walletViewModel,
-                    navToAddReport = { wallet_id ->
-                        navController.navigate(Screens.AddReportScreen.route.plus("/?wallet_id=$wallet_id"))
+                    navToAddReport = { wallet_name ->
+                        navController.navigate(Screens.AddReportScreen.route.plus("/?wallet_name=$wallet_name"))
                     },
                     navToReportDetail = { report_id ->
                         navController.navigate(Screens.ReportScreen.route.plus("/?report_id=$report_id"))
@@ -170,11 +170,11 @@ fun MoneyManagerContent() {
 
             // ADD REPORT SCREEN
             composable(
-                route = Screens.AddReportScreen.route.plus("/?wallet_id={wallet_id}"),
+                route = Screens.AddReportScreen.route.plus("/?wallet_name={wallet_name}"),
                 arguments = listOf(
-                    navArgument("wallet_id") {
-                        type = NavType.IntType
-                        defaultValue = -1
+                    navArgument("wallet_name") {
+                        type = NavType.StringType
+                        defaultValue = ""
                     }
                 )
             ) {

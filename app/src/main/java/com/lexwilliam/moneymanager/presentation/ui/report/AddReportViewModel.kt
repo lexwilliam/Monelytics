@@ -33,13 +33,13 @@ class AddReportViewModel
         cacheJob?.cancel()
     }
 
-    private val walletIdFromArgs = savedStateHandle.get<Int>("wallet_id")
+    private val walletIdFromArgs = savedStateHandle.get<String>("wallet_name")
 
-    var walletId = MutableStateFlow(-1)
+    var walletName = MutableStateFlow("")
 
     init {
         walletIdFromArgs.let {
-            walletId.value = it!!
+            walletName.value = it!!
         }
     }
 

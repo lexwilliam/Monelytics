@@ -25,7 +25,7 @@ fun AddReportScreen(
     onBackPressed: () -> Unit
 ) {
     AddReportContent(
-        walletId = viewModel.walletId.value,
+        walletName = viewModel.walletName.value,
         insertReport = viewModel::insertReport,
         onBackPressed = { onBackPressed() }
     )
@@ -34,7 +34,7 @@ fun AddReportScreen(
 @ExperimentalComposeUiApi
 @Composable
 fun AddReportContent(
-    walletId: Int,
+    walletName: String,
     insertReport: (ReportPresentation) -> Unit,
     onBackPressed: () -> Unit
 ) {
@@ -77,7 +77,7 @@ fun AddReportContent(
             onClick = {
                 insertReport(
                     ReportPresentation(
-                        thisWalletId = walletId,
+                        walletName = walletName,
                         timeAdded = System.currentTimeMillis(),
                         name = nameText,
                         money = moneyText.toDouble(),
