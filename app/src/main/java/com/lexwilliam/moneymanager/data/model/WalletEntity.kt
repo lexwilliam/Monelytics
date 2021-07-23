@@ -6,5 +6,6 @@ import androidx.room.Relation
 
 @Entity(tableName = "wallet")
 data class WalletEntity(
-    @PrimaryKey val name: String
+    @PrimaryKey val name: String,
+    val iconId: Int,
 )

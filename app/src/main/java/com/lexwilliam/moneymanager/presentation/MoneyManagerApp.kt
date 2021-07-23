@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -35,12 +36,16 @@ import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletViewModel
 import com.mikepenz.iconics.compose.ExperimentalIconics
 
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 fun MoneyManagerApp() {
     MoneyManagerContent()
 }
 
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 fun MoneyManagerContent() {

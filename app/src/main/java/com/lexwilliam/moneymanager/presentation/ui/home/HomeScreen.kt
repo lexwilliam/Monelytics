@@ -208,7 +208,7 @@ fun AddWalletCard(
 @Composable
 fun WalletCardPreview() {
     WalletCard(
-        wallet = WalletPresentation(name = "Test", reports = emptyList()),
+        wallet = WalletPresentation(name = "Test", iconId = R.drawable.account_balance_wallet_black_24dp, reports = emptyList()),
         navToWalletDetail = {}
     )
 }

@@ -8,6 +8,7 @@ import com.lexwilliam.moneymanager.domain.model.Wallet
 internal fun WalletWithReport.toDomain(): Wallet {
     return Wallet(
         name = wallet.name,
+        iconId = wallet.iconId,
         reports = reports.map { it.toDomain() }
     )
 }

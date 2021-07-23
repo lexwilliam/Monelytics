@@ -1,6 +1,7 @@
 package com.lexwilliam.moneymanager.presentation.ui.wallet
 
 import androidx.lifecycle.SavedStateHandle
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.domain.usecase.GetWalletByIdUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
@@ -53,5 +54,5 @@ class WalletViewModel
 }
 
 data class WalletViewState(
-    val wallet: WalletPresentation = WalletPresentation(name = "", reports = emptyList())
+    val wallet: WalletPresentation = WalletPresentation(name = "", iconId = R.drawable.account_balance_wallet_black_24dp,reports = emptyList())
 )

@@ -18,10 +18,11 @@ import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 
 @Composable
 fun DoneButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .shadow(8.dp, MaterialTheme.shapes.medium, true)
             .background(color = MaterialTheme.colors.primary)
             .padding(16.dp)

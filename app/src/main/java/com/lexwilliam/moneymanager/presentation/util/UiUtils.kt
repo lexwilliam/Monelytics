@@ -3,6 +3,7 @@ package com.lexwilliam.moneymanager.presentation.util
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.ui.unit.dp
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import java.text.NumberFormat
@@ -16,6 +17,15 @@ val cardWidth = 200.dp
 val cardHeight = 270.dp
 
 val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMM yyyy", false)
+
+val walletIconResources: List<Int> = listOf(
+    R.drawable.account_balance_black_24dp,
+    R.drawable.account_filled_balance_wallet_black_24dp,
+    R.drawable.savings_black_24dp,
+    R.drawable.store_black_24dp,
+    R.drawable.shopping_bag_black_24dp,
+    R.drawable.shopping_basket_black_24dp
+)
 
 data class IncomeExpenseSummary(
     val income: Double,

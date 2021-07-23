@@ -6,7 +6,7 @@ import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 
 internal fun WalletPresentation.toDomain(): Wallet {
-    return Wallet(name, reports.map { it.toDomain() })
+    return Wallet(name, iconId, reports.map { it.toDomain() })
 }
 
 internal fun ReportPresentation.toDomain(): Report {
