@@ -2,10 +2,16 @@ package com.lexwilliam.moneymanager.presentation.util
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+import com.lexwilliam.moneymanager.presentation.ui.theme.BrightYellow
+import com.lexwilliam.moneymanager.presentation.ui.theme.ForestGreen
+import com.lexwilliam.moneymanager.presentation.ui.theme.Mint
+import com.lexwilliam.moneymanager.presentation.ui.theme.YellowGreen
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -112,3 +118,26 @@ fun convertDoubleToMoneyFormat(num: Double): String {
     val numberFormat = NumberFormat.getCurrencyInstance()
     return numberFormat.format(num)
 }
+
+val categoryList = listOf(
+    ReportCategory("Bills & Utilities", Color.LightGray, ReportType.Expense),
+    ReportCategory("Shopping", Color.Blue, ReportType.Expense),
+    ReportCategory("Food", Color.Yellow, ReportType.Expense),
+    ReportCategory("Transportation", Color.Black, ReportType.Expense),
+    ReportCategory("Gifts & Donations", Color.Red, ReportType.Expense),
+    ReportCategory("Travel", Color.Cyan, ReportType.Expense),
+    ReportCategory("Family", Color.Magenta, ReportType.Expense),
+    ReportCategory("Education", Color.Gray, ReportType.Expense),
+    ReportCategory("Investment", Color.DarkGray, ReportType.Expense),
+    ReportCategory("Business", Mint, ReportType.Expense),
+    ReportCategory("Insurance", YellowGreen, ReportType.Expense),
+    ReportCategory("Fees & Charges", Color(185,84,45), ReportType.Expense),
+    ReportCategory("Withdrawal", Color(179,247,148), ReportType.Expense),
+    ReportCategory("Other Expense", Color(165,250,231), ReportType.Expense),
+    ReportCategory("Award", ForestGreen, ReportType.Income),
+    ReportCategory("Interest Money", BrightYellow, ReportType.Income),
+    ReportCategory("Salary", Color(111,194,139), ReportType.Income),
+    ReportCategory("Gifts", Color.Green, ReportType.Income),
+    ReportCategory("Selling", Color(49,77,173), ReportType.Income),
+    ReportCategory("Other Income", Color(134,156,113), ReportType.Income)
+)

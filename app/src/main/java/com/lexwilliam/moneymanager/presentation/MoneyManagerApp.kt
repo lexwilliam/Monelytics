@@ -26,10 +26,7 @@ import com.lexwilliam.moneymanager.presentation.ui.profile.ProfileScreen
 import com.lexwilliam.moneymanager.presentation.ui.profile.ProfileViewModel
 import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringScreen
 import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringViewModel
-import com.lexwilliam.moneymanager.presentation.ui.report.AddReportScreen
-import com.lexwilliam.moneymanager.presentation.ui.report.AddReportViewModel
-import com.lexwilliam.moneymanager.presentation.ui.report.ReportScreen
-import com.lexwilliam.moneymanager.presentation.ui.report.ReportViewModel
+import com.lexwilliam.moneymanager.presentation.ui.report.*
 import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletScreen
@@ -175,9 +172,15 @@ fun MoneyManagerContent() {
 
             // ADD REPORT SCREEN
             composable(
-                route = Screens.AddReportScreen.route.plus("/?wallet_name={wallet_name}"),
+                route = Screens.AddReportScreen.route
+                    .plus("/?wallet_name={wallet_name}")
+                    .plus("/?category_name={category_name}"),
                 arguments = listOf(
                     navArgument("wallet_name") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                    navArgument("category_name") {
                         type = NavType.StringType
                         defaultValue = ""
                     }
@@ -186,8 +189,22 @@ fun MoneyManagerContent() {
                 val addReportViewModel = hiltViewModel<AddReportViewModel>()
                 AddReportScreen(
                     viewModel = addReportViewModel,
+                    navToEditCategory = {
+                        navController.navigate(Screens.EditReportCategoryScreen.route)
+                    },
                     onBackPressed = {
                         navController.navigateUp()
+                    }
+                )
+            }
+
+            // EDIT REPORT CATEGORY
+            composable(
+                route = Screens.EditReportCategoryScreen.route
+            ) {
+                EditReportCategoryScreen(
+                    navToAddReport = { category_name ->
+                        navController.navigate(Screens.AddReportScreen.route.plus("/?category_name={$category_name}"))
                     }
                 )
             }
@@ -237,4 +254,5 @@ sealed class Screens(val route: String) {
     object AddWalletScreen : Screens("addWallet")
     object ReportScreen: Screens("report")
     object AddReportScreen: Screens("addReport")
+    object EditReportCategoryScreen: Screens("editReportCategory")
 }

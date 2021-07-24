@@ -1,17 +1,21 @@
 package com.lexwilliam.moneymanager.presentation.ui.report
 
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
-import com.lexwilliam.moneymanager.domain.usecase.GetWalletByIdUseCase
+import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.domain.usecase.InsertReportUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toDomain
+import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
+import com.lexwilliam.moneymanager.presentation.util.categoryList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -27,19 +31,29 @@ class AddReportViewModel
     }
 
     private var cacheJob: Job? = null
+    private var initJob: Job? = null
 
     override fun onCleared() {
         super.onCleared()
         cacheJob?.cancel()
     }
 
-    private val walletIdFromArgs = savedStateHandle.get<String>("wallet_name")
+    private val walletNameFromArgs = savedStateHandle.get<String>("wallet_name")
+    private val categoryNameFromArgs = savedStateHandle.get<String>("category_name")
 
-    var walletName = MutableStateFlow("")
+    private var _state = MutableStateFlow(AddReportViewState())
+    val state = _state.asStateFlow()
 
     init {
-        walletIdFromArgs.let {
-            walletName.value = it!!
+        initJob?.cancel()
+        initJob = launchCoroutine {
+            walletNameFromArgs.let {
+                _state.value = _state.value.copy(walletName = it!!)
+            }
+            categoryNameFromArgs.let {
+                val selectedCategory = categoryList.find { category -> category.name == it!! }
+                _state.value = _state.value.copy(category = selectedCategory!!)
+            }
         }
     }
 
@@ -56,3 +70,8 @@ class AddReportViewModel
         }
     }
 }
+
+data class AddReportViewState(
+    val walletName: String = "",
+    val category: ReportCategory = ReportCategory("", Color.Black, reportType = ReportType.Default)
+)
