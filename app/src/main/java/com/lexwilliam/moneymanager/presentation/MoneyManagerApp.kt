@@ -173,14 +173,9 @@ fun MoneyManagerContent() {
             // ADD REPORT SCREEN
             composable(
                 route = Screens.AddReportScreen.route
-                    .plus("/?wallet_name={wallet_name}")
-                    .plus("/?category_name={category_name}"),
+                    .plus("/?wallet_name={wallet_name}"),
                 arguments = listOf(
                     navArgument("wallet_name") {
-                        type = NavType.StringType
-                        defaultValue = ""
-                    },
-                    navArgument("category_name") {
                         type = NavType.StringType
                         defaultValue = ""
                     }
@@ -189,22 +184,8 @@ fun MoneyManagerContent() {
                 val addReportViewModel = hiltViewModel<AddReportViewModel>()
                 AddReportScreen(
                     viewModel = addReportViewModel,
-                    navToEditCategory = {
-                        navController.navigate(Screens.EditReportCategoryScreen.route)
-                    },
                     onBackPressed = {
                         navController.navigateUp()
-                    }
-                )
-            }
-
-            // EDIT REPORT CATEGORY
-            composable(
-                route = Screens.EditReportCategoryScreen.route
-            ) {
-                EditReportCategoryScreen(
-                    navToAddReport = { category_name ->
-                        navController.navigate(Screens.AddReportScreen.route.plus("/?category_name={$category_name}"))
                     }
                 )
             }
@@ -254,5 +235,4 @@ sealed class Screens(val route: String) {
     object AddWalletScreen : Screens("addWallet")
     object ReportScreen: Screens("report")
     object AddReportScreen: Screens("addReport")
-    object EditReportCategoryScreen: Screens("editReportCategory")
 }

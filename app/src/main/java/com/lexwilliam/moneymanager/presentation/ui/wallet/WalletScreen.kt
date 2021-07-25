@@ -90,7 +90,7 @@ fun IncomeAndExpenseCard(
     var income = 0.0
     reports.forEach { report ->
         when(report.reportType) {
-            ReportType.Expense -> expense -= report.money
+            ReportType.Expense -> expense += report.money
             ReportType.Income -> income += report.money
             ReportType.Default -> Log.d("TAG", "No Report Type")
         }

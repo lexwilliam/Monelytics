@@ -39,7 +39,6 @@ class AddReportViewModel
     }
 
     private val walletNameFromArgs = savedStateHandle.get<String>("wallet_name")
-    private val categoryNameFromArgs = savedStateHandle.get<String>("category_name")
 
     private var _state = MutableStateFlow(AddReportViewState())
     val state = _state.asStateFlow()
@@ -49,10 +48,6 @@ class AddReportViewModel
         initJob = launchCoroutine {
             walletNameFromArgs.let {
                 _state.value = _state.value.copy(walletName = it!!)
-            }
-            categoryNameFromArgs.let {
-                val selectedCategory = categoryList.find { category -> category.name == it!! }
-                _state.value = _state.value.copy(category = selectedCategory!!)
             }
         }
     }
@@ -72,6 +67,5 @@ class AddReportViewModel
 }
 
 data class AddReportViewState(
-    val walletName: String = "",
-    val category: ReportCategory = ReportCategory("", Color.Black, reportType = ReportType.Default)
+    val walletName: String = ""
 )

@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.data.mapper
 
+import androidx.compose.ui.graphics.Color
 import com.lexwilliam.moneymanager.data.model.ReportEntity
 import com.lexwilliam.moneymanager.data.model.WalletWithReport
 import com.lexwilliam.moneymanager.domain.model.Report
@@ -14,5 +15,5 @@ internal fun WalletWithReport.toDomain(): Wallet {
 }
 
 internal fun ReportEntity.toDomain(): Report {
-    return Report(reportId, walletName, timeAdded, name, money, reportType)
+    return Report(reportId, walletName, timeAdded, color, name, money, reportType)
 }

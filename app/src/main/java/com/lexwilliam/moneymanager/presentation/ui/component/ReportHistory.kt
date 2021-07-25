@@ -1,18 +1,22 @@
 package com.lexwilliam.moneymanager.presentation.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoneyFormat
 import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
+import com.lexwilliam.moneymanager.presentation.util.convertStringToColor
 
 @Composable
 fun HistoryList(
@@ -49,14 +53,20 @@ fun ReportRow(
                 navToReportDetail(report.reportId)
             }
     ) {
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(2f),
-            contentAlignment = Alignment.CenterStart
+                .weight(3f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Column(
-            ) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(convertStringToColor(report.color))
+            )
+            Column {
                 Text(text = report.name, style = MaterialTheme.typography.subtitle1)
                 Text(text = report.walletName, style = MaterialTheme.typography.overline)
             }

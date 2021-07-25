@@ -10,5 +10,5 @@ internal fun Wallet.toPresentation(): WalletPresentation {
 }
 
 internal fun Report.toPresentation(): ReportPresentation {
-    return ReportPresentation(reportId, walletName, timeAdded, name, money, reportType)
+    return ReportPresentation(reportId, walletName, timeAdded, color, name, money, reportType)
 }

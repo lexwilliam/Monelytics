@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.report
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,36 +22,42 @@ import com.lexwilliam.moneymanager.presentation.util.categoryList
 
 @Composable
 fun EditReportCategoryScreen(
-    navToAddReport: (String) -> Unit
+    setCategory: (ReportCategory) -> Unit
 ) {
 //    var isSearchBarShown by remember { mutableStateOf(false) }
-    TopAppBar(
-        title = {
-            Text("Select Report Category") },
-        actions = {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.Search, contentDescription = null)
+    Column {
+        TopAppBar(
+            title = {
+                Text("Select Report Category") },
+            actions = {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Default.Search, contentDescription = null)
+                }
+            },
+            navigationIcon = {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = null)
+                }
             }
-        },
-        navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.ArrowBack, contentDescription = null)
-            }
+        )
+
+        var tabRowStatus by remember { mutableStateOf("Expense") }
+        CategoryTabRow(status = tabRowStatus, setReportType = {
+            tabRowStatus = it
+            Log.d("TAG", tabRowStatus)
+        })
+
+        var category by remember { mutableStateOf(categoryList) }
+        when(tabRowStatus) {
+            "Expense" -> category = categoryList.filter { it.reportType == ReportType.Expense }
+            "Income" -> category = categoryList.filter { it.reportType == ReportType.Income }
         }
-    )
-
-    var tabRowStatus by remember { mutableStateOf("Expense") }
-    CategoryTabRow(status = tabRowStatus, setReportType = { tabRowStatus = it })
-
-    var categoryList by remember { mutableStateOf(categoryList) }
-    when(tabRowStatus) {
-        "Expense" -> categoryList = categoryList.filter { it.reportType == ReportType.Expense }
-        "Income" -> categoryList = categoryList.filter { it.reportType == ReportType.Income }
-    }
-    LazyColumn {
-        items(items = categoryList) { item ->
-            CategoryRow(category = item, onCategorySelected = { category -> navToAddReport(category) })
-            Divider()
+        Log.d("TAG", category.toString())
+        LazyColumn {
+            items(items = category) { item ->
+                CategoryRow(category = item, onCategorySelected = { category -> setCategory(category) })
+                Divider()
+            }
         }
     }
 }
@@ -62,7 +69,8 @@ fun CategoryTabRow(
 ) {
     val categoryTabRow = listOf("Expense", "Income")
     var currentIndex by remember { mutableStateOf(categoryTabRow.indexOf(status)) }
-    ScrollableTabRow(
+    TabRow(
+        modifier = Modifier.fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.background,
         selectedTabIndex = currentIndex
     ) {
@@ -89,12 +97,12 @@ fun CategoryTabRow(
 fun CategoryRow(
     modifier: Modifier = Modifier,
     category: ReportCategory,
-    onCategorySelected: (String) -> Unit
+    onCategorySelected: (ReportCategory) -> Unit
 ) {
     Row(
         modifier = modifier
             .padding(24.dp)
-            .clickable { onCategorySelected(category.name) },
+            .clickable { onCategorySelected(category) },
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
