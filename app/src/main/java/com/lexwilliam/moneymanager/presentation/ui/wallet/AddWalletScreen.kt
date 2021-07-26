@@ -1,6 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.wallet
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -12,21 +12,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
-import com.lexwilliam.moneymanager.presentation.ui.theme.BrightYellow
-import com.lexwilliam.moneymanager.presentation.ui.theme.ForestGreen
-import com.lexwilliam.moneymanager.presentation.ui.theme.Mint
-import com.lexwilliam.moneymanager.presentation.ui.theme.YellowGreen
 import com.lexwilliam.moneymanager.presentation.util.walletIconResources
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

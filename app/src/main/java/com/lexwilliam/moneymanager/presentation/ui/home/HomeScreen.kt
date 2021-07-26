@@ -2,6 +2,7 @@ package com.lexwilliam.moneymanager
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -10,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,13 +51,22 @@ fun HomeContent(
     navToReportDetail: (Int) -> Unit
 ) {
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()),
+        modifier = Modifier
+            .background(MaterialTheme.colors.primary)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         HomeTopAppBar()
         TotalBalance(wallets = wallets)
         WalletCardRowList(wallets = wallets, navToWalletDetail = { navToWalletDetail(it) }, navToAddWallet = { navToAddWallet()})
-        HistoryList(modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 54.dp), reports = reports, navToReportDetail = { navToReportDetail(it) })
+        Column(modifier = Modifier
+            .padding(top = 16.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .fillMaxWidth()
+            .wrapContentHeight()
+        ) {
+            HistoryList(modifier = Modifier.background(Color.White).padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 64.dp), reports = reports, navToReportDetail = { navToReportDetail(it) })
+        }
     }
 }
 
@@ -69,7 +80,7 @@ fun HomeTopAppBar() {
                     .size(32.dp),
                 onClick = { /*TODO*/ }
             ) {
-                Icon(Icons.Default.Menu, contentDescription = null, tint = Color.Gray)
+                Icon(Icons.Default.Menu, contentDescription = null, tint = Color.White)
             }
         },
         actions = {
@@ -78,12 +89,11 @@ fun HomeTopAppBar() {
                     .size(32.dp),
                 onClick = { /*TODO*/ }
             ) {
-                Icon(Icons.Default.Settings, contentDescription = null, tint = Color.Gray)
+                Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
             }
         },
         elevation = 0.dp,
-        backgroundColor = MaterialTheme.colors.background,
-        contentColor = MaterialTheme.colors.onBackground
+        backgroundColor = MaterialTheme.colors.primary
     )
 }
 
@@ -94,11 +104,10 @@ fun TotalBalance(
     Column(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "TOTAL BALANCE", style = MaterialTheme.typography.overline, color = Color.LightGray)
-        Text(text = convertDoubleToMoneyFormat(allWalletTotalBalance(wallets)), style = MaterialTheme.typography.h3)
+        Text(text = "TOTAL BALANCE", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
+        Text(text = convertDoubleToMoneyFormat(allWalletTotalBalance(wallets)), style = MaterialTheme.typography.h3, color = Color.White)
     }
 }
 
@@ -154,7 +163,7 @@ fun WalletCard(
             .width(cardWidth)
             .wrapContentHeight()
             .shadow(4.dp, MaterialTheme.shapes.medium, clip = true)
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colors.secondary)
             .clickable { navToWalletDetail(wallet.name) }
     ) {
         Column(
@@ -167,18 +176,18 @@ fun WalletCard(
             Text(text = "Balance", style = MaterialTheme.typography.caption)
             Text(text = convertDoubleToMoneyFormat(walletTotalBalance(wallet)), style = MaterialTheme.typography.h5)
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.AccountBox, contentDescription = null)
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.Edit, contentDescription = null)
-            }
-        }
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth(),
+//            horizontalArrangement = Arrangement.End
+//        ) {
+//            IconButton(onClick = { /*TODO*/ }) {
+//                Icon(Icons.Default.AccountBox, contentDescription = null)
+//            }
+//            IconButton(onClick = { /*TODO*/ }) {
+//                Icon(Icons.Default.Edit, contentDescription = null)
+//            }
+//        }
     }
 }
 
@@ -190,8 +199,8 @@ fun AddWalletCard(
         modifier = Modifier
             .size(width = 100.dp, height = 100.dp)
             .padding(end = 24.dp)
-            .shadow(4.dp, MaterialTheme.shapes.medium, clip = true)
-            .background(color = MaterialTheme.colors.secondaryVariant)
+            .clip(MaterialTheme.shapes.medium)
+            .background(color = MaterialTheme.colors.primaryVariant)
             .clickable { navToAddWallet() },
         contentAlignment = Alignment.Center
     ) {
@@ -199,7 +208,7 @@ fun AddWalletCard(
             modifier = Modifier.size(50.dp),
             imageVector = Icons.Default.Add,
             contentDescription = null,
-            tint = Color.White
+            tint = MaterialTheme.colors.secondary
         )
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +31,30 @@ fun HistoryList(
     ) {
         val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy") }
         groupedReports.forEach { (time, groupOfReport) ->
-            Text(text = time, style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
+            var dateTotalBalance = 0.0
+            groupOfReport.forEach {
+                dateTotalBalance += it.money
+            }
+            Row {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Text(text = time, style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    Text(text = convertDoubleToMoneyFormat(dateTotalBalance), style = MaterialTheme.typography.h6)
+                }
+
+            }
+            Divider()
             groupOfReport.forEach { report ->
                 ReportRow(report = report) {
                     navToReportDetail(it)
@@ -51,14 +75,15 @@ fun ReportRow(
             .fillMaxWidth()
             .clickable {
                 navToReportDetail(report.reportId)
-            }
+            },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(3f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
@@ -67,7 +92,7 @@ fun ReportRow(
                     .background(convertStringToColor(report.color))
             )
             Column {
-                Text(text = report.name, style = MaterialTheme.typography.subtitle1)
+                Text(text = report.name, style = MaterialTheme.typography.body1)
                 Text(text = report.walletName, style = MaterialTheme.typography.overline)
             }
         }
@@ -77,7 +102,7 @@ fun ReportRow(
                 .weight(1f),
             contentAlignment = Alignment.CenterEnd
         ) {
-            Text(text = convertDoubleToMoneyFormat(report.money))
+            Text(text = convertDoubleToMoneyFormat(report.money), style = MaterialTheme.typography.body1)
         }
     }
 }

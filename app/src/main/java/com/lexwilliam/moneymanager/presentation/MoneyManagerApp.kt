@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -65,8 +66,7 @@ fun MoneyManagerContent() {
     Scaffold(
         bottomBar = {
             BottomNavigation(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.onBackground
+                backgroundColor = MaterialTheme.colors.primary
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination
@@ -75,9 +75,9 @@ fun MoneyManagerContent() {
                     BottomNavigationItem(
                         icon = {
                             if(currentRoute?.hierarchy?.any { it.route == screen.route } == true) {
-                                Icon(painter = painterResource(id = screen.iconOutlined), contentDescription = null)
+                                Icon(painter = painterResource(id = screen.iconOutlined), contentDescription = null, tint = MaterialTheme.colors.secondary)
                             } else {
-                                Icon(painter = painterResource(id = screen.iconFilled), contentDescription = null)
+                                Icon(painter = painterResource(id = screen.iconFilled), contentDescription = null, tint = Color.LightGray)
                             }
 
                         },
@@ -87,8 +87,7 @@ fun MoneyManagerContent() {
                                 popUpTo(navController.graph.findStartDestination().id)
                                 launchSingleTop = true
                             }
-                        },
-                        label = { Text(screen.description) }
+                        }
                     )
                 }
             }

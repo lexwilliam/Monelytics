@@ -2,7 +2,9 @@ package com.lexwilliam.moneymanager.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val ForestGreen = Color(10, 112, 41)
-val BrightYellow = Color(254, 222, 0)
-val YellowGreen = Color(200, 223, 82)
-val Mint = Color(219, 232, 216)
+val Grey900 = Color(0xFF1B1B1B)
+val LightGrey = Color(0x48484848)
+val DarkGrey = Color(0xFF000000)
+val Yellow400 = Color(0xFFFEEE58)
+val LightYellow = Color(0xFFFFFF8B)
+val DarkYellow = Color(0xFFC9BC1F)

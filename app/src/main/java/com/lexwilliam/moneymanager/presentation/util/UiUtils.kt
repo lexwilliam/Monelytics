@@ -8,10 +8,7 @@ import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
-import com.lexwilliam.moneymanager.presentation.ui.theme.BrightYellow
-import com.lexwilliam.moneymanager.presentation.ui.theme.ForestGreen
-import com.lexwilliam.moneymanager.presentation.ui.theme.Mint
-import com.lexwilliam.moneymanager.presentation.ui.theme.YellowGreen
+import com.lexwilliam.moneymanager.presentation.ui.theme.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -138,13 +135,13 @@ val categoryList = listOf(
     ReportCategory("Family", Color.Magenta, ReportType.Expense),
     ReportCategory("Education", Color.Gray, ReportType.Expense),
     ReportCategory("Investment", Color.DarkGray, ReportType.Expense),
-    ReportCategory("Business", Mint, ReportType.Expense),
-    ReportCategory("Insurance", YellowGreen, ReportType.Expense),
+    ReportCategory("Business", Yellow400, ReportType.Expense),
+    ReportCategory("Insurance", LightYellow, ReportType.Expense),
     ReportCategory("Fees & Charges", Color(185,84,45), ReportType.Expense),
     ReportCategory("Withdrawal", Color(179,247,148), ReportType.Expense),
     ReportCategory("Other Expense", Color(165,250,231), ReportType.Expense),
-    ReportCategory("Award", ForestGreen, ReportType.Income),
-    ReportCategory("Interest Money", BrightYellow, ReportType.Income),
+    ReportCategory("Award", DarkYellow, ReportType.Income),
+    ReportCategory("Interest Money", LightGrey, ReportType.Income),
     ReportCategory("Salary", Color(111,194,139), ReportType.Income),
     ReportCategory("Gifts", Color.Green, ReportType.Income),
     ReportCategory("Selling", Color(49,77,173), ReportType.Income),
