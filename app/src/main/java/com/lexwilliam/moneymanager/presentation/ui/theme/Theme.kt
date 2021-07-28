@@ -35,14 +35,10 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun MoneyManagerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     content: @Composable() () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,

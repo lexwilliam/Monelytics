@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,13 +14,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.R
+import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
@@ -34,8 +34,12 @@ fun WalletScreen(
     navToReportDetail: (Int) -> Unit
 ) {
     val viewState by viewModel.state.collectAsState()
+    var currentDate by remember { mutableStateOf(thisMonth) }
+    Log.d("TAG", currentDate)
     WalletContent(
         wallet = viewState.wallet,
+        currentDate = currentDate,
+        setDate = { currentDate = it },
         navToAddReport = { navToAddReport(it) },
         navToReportDetail = { navToReportDetail(it) }
     )
@@ -44,6 +48,8 @@ fun WalletScreen(
 @Composable
 fun WalletContent(
     wallet: WalletPresentation,
+    currentDate: String,
+    setDate: (String) -> Unit,
     navToAddReport: (String) -> Unit,
     navToReportDetail: (Int) -> Unit
 ) {
@@ -60,7 +66,6 @@ fun WalletContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .shadow(4.dp, RoundedCornerShape(bottomStart = 48.dp, bottomEnd = 48.dp), true)
                     .wrapContentHeight()
             ) {
                 Column(
@@ -85,7 +90,7 @@ fun WalletContent(
                             Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
                         }
                     }
-                    WalletSummary(modifier = Modifier.padding(bottom = 48.dp, start = 24.dp, end = 24.dp), wallet = wallet)
+                    WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
                 }
             }
             Column(
@@ -93,14 +98,18 @@ fun WalletContent(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                var status by remember { mutableStateOf(thisMonth) }
-                WalletTabRow(status = status, wallet = wallet, setTime = { status = it })
-                HistoryList(
-                    modifier = Modifier.padding(horizontal = 24.dp),
-                    reports = wallet.reports,
-                    navToReportDetail = { navToReportDetail(it) },
-                    todayEnabled = false
-                )
+                WalletTabRow(status = currentDate, wallet = wallet, setTime = { setDate(it) })
+                if(wallet.reports.isNotEmpty()) {
+                    val reports = wallet.reports.filter { convertLongToTime(it.timeAdded, "MMMM yyyy", false) == currentDate }
+                    Log.d("reportTAG", reports.toString())
+                    HistoryList(
+                        modifier = Modifier.padding(horizontal = 24.dp),
+                        reports = reports,
+                        navToReportDetail = { navToReportDetail(it) },
+                        todayEnabled = false,
+                        isWalletNameShow = false
+                    )
+                }
             }
         }
     }
@@ -140,12 +149,15 @@ fun WalletSummary(
     modifier: Modifier = Modifier,
     wallet: WalletPresentation
 ) {
+    val income = getWalletIncome(wallet)
+    val expense = getWalletExpense(wallet)
+    val total = income + expense
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Column {
-            Text(text = "TOTAL BALANCE", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
+            Text(text = "WALLET BALANCE", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
             Text(text = convertDoubleToMoney(walletTotalBalance(wallet)), style = MaterialTheme.typography.h5, color = Color.White)
         }
         Row(
@@ -161,7 +173,7 @@ fun WalletSummary(
             ) {
                 Column {
                     Text(text = "Income", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
-                    Text(text = convertDoubleToMoney(getWalletIncome(wallet)), style = MaterialTheme.typography.subtitle1, color = Color.Green)
+                    Text(text = convertDoubleToMoney(income), style = MaterialTheme.typography.subtitle1, color = Color.Green)
                 }
             }
             Box(
@@ -171,7 +183,17 @@ fun WalletSummary(
             ) {
                 Column {
                     Text(text = "Expense", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
-                    Text(text = convertDoubleToMoney(getWalletExpense(wallet)), style = MaterialTheme.typography.subtitle1, color = Color.Red)
+                    Text(text = convertDoubleToMoney(expense), style = MaterialTheme.typography.subtitle1, color = Color.Red)
+                }
+            }
+            Box(
+                Modifier
+                    .weight(1f),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Column {
+                    Text(text = "Total", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
+                    Text(text = convertDoubleToMoney(total), style = MaterialTheme.typography.subtitle1, color = Color.White)
                 }
             }
         }
@@ -234,8 +256,6 @@ fun WalletTabRow(
 ) {
     if(wallet.reports.isNotEmpty()) {
         val dateList = configureTabRowItems(wallet)
-        Log.d("TAG", dateList.size.toString())
-        Log.d("TAG", dateList.toString())
         var currentIndex by remember { mutableStateOf(dateList.indexOf(status)) }
         ScrollableTabRow(
             modifier = Modifier.fillMaxWidth(),
@@ -271,7 +291,6 @@ fun configureTabRowItems(wallet: WalletPresentation): List<String> {
     val resultList = mutableListOf<String>()
     onlyMonths.forEach { month ->
         val arr = month.split(" ")
-        Log.d("TAG", arr.toString())
         val year = arr.last().toInt()
         val monthList = getMonthsNameFromYear(year)
         monthList.forEach {
@@ -285,6 +304,6 @@ fun configureTabRowItems(wallet: WalletPresentation): List<String> {
 @Composable
 fun WalletContentPreview() {
     MoneyManagerTheme {
-        WalletContent(wallet = fakeWallet, navToAddReport = {}, navToReportDetail = {})
+        WalletContent(wallet = fakeWallet, currentDate = "", setDate = {}, navToAddReport = {}, navToReportDetail = {})
     }
 }

@@ -25,13 +25,15 @@ fun HistoryList(
     modifier: Modifier = Modifier,
     reports: List<ReportPresentation>,
     todayEnabled: Boolean = true,
+    isWalletNameShow: Boolean = true,
     navToReportDetail: (Int) -> Unit
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
+        val sortedReport = reports.sortedByDescending { it.timeAdded }
+        val groupedReports = sortedReport.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
         groupedReports.forEach { (time, groupOfReport) ->
             var dateTotalBalance = 0.0
             groupOfReport.forEach {
@@ -58,7 +60,7 @@ fun HistoryList(
             }
             Divider()
             groupOfReport.forEach { report ->
-                ReportRow(report = report) {
+                ReportRow(report = report, isWalletNameShow = isWalletNameShow) {
                     navToReportDetail(it)
                 }
             }
@@ -70,6 +72,7 @@ fun HistoryList(
 fun ReportRow(
     modifier: Modifier = Modifier,
     report: ReportPresentation,
+    isWalletNameShow: Boolean,
     navToReportDetail: (Int) -> Unit
 ) {
     Row(
@@ -95,7 +98,9 @@ fun ReportRow(
             )
             Column {
                 Text(text = report.name, style = MaterialTheme.typography.body1)
-                Text(text = report.walletName, style = MaterialTheme.typography.overline)
+                if(isWalletNameShow) {
+                    Text(text = report.walletName, style = MaterialTheme.typography.overline)
+                }
             }
         }
         Box(
@@ -112,5 +117,5 @@ fun ReportRow(
 @Preview
 @Composable
 fun HistoryListPreview() {
-    HistoryList(reports = fakeReports, navToReportDetail = {})
+    HistoryList(reports = fakeReports, navToReportDetail = {}, isWalletNameShow = true)
 }
