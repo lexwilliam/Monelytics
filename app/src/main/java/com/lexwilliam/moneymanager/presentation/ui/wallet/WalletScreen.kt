@@ -96,11 +96,13 @@ fun WalletContent(
             }
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                var status by remember { mutableStateOf(thisMonth) }
+                WalletTabRow(status = status, wallet = wallet, setTime = { status = it })
                 HistoryList(
+                    modifier = Modifier.padding(horizontal = 24.dp),
                     reports = wallet.reports,
                     navToReportDetail = { navToReportDetail(it) },
                     todayEnabled = false
@@ -236,25 +238,32 @@ fun WalletTabRow(
     wallet: WalletPresentation,
     setTime: (String) -> Unit
 ) {
-    val reportList = wallet.reports
-    var currentIndex by remember { mutableStateOf(0) }
-    TabRow(
-        modifier = Modifier.fillMaxWidth(),
-        backgroundColor = MaterialTheme.colors.background,
-        selectedTabIndex = currentIndex
-    ) {
-        reportList.forEachIndexed { index, status ->
-            Tab(
-                selected = index == currentIndex,
-                onClick = {
-                    currentIndex = index
-                }
-            ) {
-                Box(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    contentAlignment = Alignment.Center
+    val fakeMonthList = listOf("April 2021", "May 2021", "June 2021", "July 2021")
+    val groupedList = wallet.reports.groupBy { convertLongToTime(it.timeAdded, "MMMM yyyy", false) }
+    val onlyMonths = groupedList.map { it.key }
+    if(fakeMonthList.isNotEmpty()) {
+    var currentIndex by remember { mutableStateOf(fakeMonthList.indexOf(status)) }
+        ScrollableTabRow(
+            modifier = Modifier.fillMaxWidth(),
+            backgroundColor = MaterialTheme.colors.background,
+            selectedTabIndex = currentIndex
+        ) {
+            fakeMonthList.forEachIndexed { index, month ->
+                Tab(
+                    selected = index == currentIndex,
+                    onClick = {
+                        currentIndex = index
+                        setTime(month)
+                    }
                 ) {
-//                    Text(text = status, style = MaterialTheme.typography.subtitle1)
+                    Column(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        val arr = month.split(" ")
+                        Text(text = arr[0], style = MaterialTheme.typography.h6)
+                        Text(text = arr[1], style = MaterialTheme.typography.overline)
+                    }
                 }
             }
         }

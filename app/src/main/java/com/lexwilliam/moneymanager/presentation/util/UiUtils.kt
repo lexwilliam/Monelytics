@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportCategory
+import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.theme.*
 import java.text.NumberFormat
@@ -19,7 +20,7 @@ import java.util.*
 val cardWidth = 200.dp
 val cardHeight = 270.dp
 
-val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMM yyyy", false)
+val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMMM yyyy", false)
 
 val walletIconResources: List<Int> = listOf(
     R.drawable.account_balance_black_24dp,
