@@ -22,6 +22,10 @@ val cardHeight = 270.dp
 
 val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMMM yyyy", false)
 
+fun getMonthsNameFromYear(year: Int): List<String> {
+    return listOf("January $year", "February $year", "March $year", "April $year", "May $year", "June $year", "July $year", "August $year", "September $year", "October $year", "November $year", "December $year",)
+}
+
 val walletIconResources: List<Int> = listOf(
     R.drawable.account_balance_black_24dp,
     R.drawable.account_filled_balance_wallet_black_24dp,

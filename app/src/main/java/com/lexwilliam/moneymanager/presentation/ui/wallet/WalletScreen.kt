@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,12 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
-import com.lexwilliam.moneymanager.presentation.ui.report.CategoryRow
-import com.lexwilliam.moneymanager.presentation.ui.report.CategoryTabRow
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.*
 
@@ -238,17 +232,17 @@ fun WalletTabRow(
     wallet: WalletPresentation,
     setTime: (String) -> Unit
 ) {
-    val fakeMonthList = listOf("April 2021", "May 2021", "June 2021", "July 2021")
-    val groupedList = wallet.reports.groupBy { convertLongToTime(it.timeAdded, "MMMM yyyy", false) }
-    val onlyMonths = groupedList.map { it.key }
-    if(fakeMonthList.isNotEmpty()) {
-    var currentIndex by remember { mutableStateOf(fakeMonthList.indexOf(status)) }
+    if(wallet.reports.isNotEmpty()) {
+        val dateList = configureTabRowItems(wallet)
+        Log.d("TAG", dateList.size.toString())
+        Log.d("TAG", dateList.toString())
+        var currentIndex by remember { mutableStateOf(dateList.indexOf(status)) }
         ScrollableTabRow(
             modifier = Modifier.fillMaxWidth(),
             backgroundColor = MaterialTheme.colors.background,
             selectedTabIndex = currentIndex
         ) {
-            fakeMonthList.forEachIndexed { index, month ->
+            dateList.forEachIndexed { index, month ->
                 Tab(
                     selected = index == currentIndex,
                     onClick = {
@@ -268,6 +262,23 @@ fun WalletTabRow(
             }
         }
     }
+}
+
+fun configureTabRowItems(wallet: WalletPresentation): List<String> {
+    val groupedList =
+        wallet.reports.groupBy { convertLongToTime(it.timeAdded, "MMMM yyyy", false) }
+    val onlyMonths = groupedList.map { it.key }
+    val resultList = mutableListOf<String>()
+    onlyMonths.forEach { month ->
+        val arr = month.split(" ")
+        Log.d("TAG", arr.toString())
+        val year = arr.last().toInt()
+        val monthList = getMonthsNameFromYear(year)
+        monthList.forEach {
+            resultList.add(it)
+        }
+    }
+    return resultList
 }
 
 @Preview
