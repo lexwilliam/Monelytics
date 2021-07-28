@@ -14,8 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
-import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoneyFormat
-import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
+import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoney
 import com.lexwilliam.moneymanager.presentation.util.getThisMonthSummary
 import com.lexwilliam.moneymanager.presentation.util.thisMonth
 
@@ -59,7 +58,7 @@ fun AllWalletSummary(
                     .weight(2f),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                Text(text = "+${convertDoubleToMoneyFormat(summary.income)}")
+                Text(text = "+${convertDoubleToMoney(summary.income)}")
             }
         }
         Divider()
@@ -84,7 +83,7 @@ fun AllWalletSummary(
                     .weight(2f),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                Text(text = convertDoubleToMoneyFormat(summary.expense))
+                Text(text = convertDoubleToMoney(summary.expense))
             }
         }
         Divider()
@@ -109,7 +108,7 @@ fun AllWalletSummary(
                     .weight(2f),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                Text(text = convertDoubleToMoneyFormat(summary.total))
+                Text(text = convertDoubleToMoney(summary.total))
             }
         }
     }

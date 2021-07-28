@@ -39,6 +39,7 @@ class HomeViewModel
     val state = _state.asStateFlow()
 
     init {
+        _state.value = _state.value.copy(isLoading = true)
         walletJob?.cancel()
         walletJob = launchCoroutine {
             getAllWalletUseCase.invoke().collect { results ->
@@ -47,7 +48,10 @@ class HomeViewModel
                 } else {
                     Log.d("TAG", "Get All Wallet Success")
                     val wallets = results.map { it.toPresentation() }
-                    _state.value = _state.value.copy(wallets = wallets)
+                    if(wallets.isEmpty()) {
+                        _state.value = _state.value.copy(isLoading = false)
+                    }
+                    _state.value = _state.value.copy(wallets = wallets, isLoading = false)
                 }
             }
         }
@@ -59,7 +63,7 @@ class HomeViewModel
                 } else {
                     Log.d("TAG", "Get All Report Success")
                     val reports = results.map { it.toPresentation() }
-                    _state.value = _state.value.copy(reports = reports)
+                    _state.value = _state.value.copy(reports = reports, isLoading = false)
                 }
             }
         }
@@ -68,5 +72,6 @@ class HomeViewModel
 
 data class HomeViewState(
     val wallets: List<WalletPresentation> = emptyList(),
-    val reports: List<ReportPresentation> = emptyList()
+    val reports: List<ReportPresentation> = emptyList(),
+    val isLoading: Boolean = false
 )

@@ -12,24 +12,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
-import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoneyFormat
+import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoney
 import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
 import com.lexwilliam.moneymanager.presentation.util.convertStringToColor
+import com.lexwilliam.moneymanager.presentation.util.fakeReports
 
 @Composable
 fun HistoryList(
     modifier: Modifier = Modifier,
     reports: List<ReportPresentation>,
+    todayEnabled: Boolean = true,
     navToReportDetail: (Int) -> Unit
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy") }
+        val groupedReports = reports.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
         groupedReports.forEach { (time, groupOfReport) ->
             var dateTotalBalance = 0.0
             groupOfReport.forEach {
@@ -42,7 +44,7 @@ fun HistoryList(
                         .weight(1f),
                     contentAlignment = Alignment.CenterStart
                 ) {
-                    Text(text = time, style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
+                    Text(text = time, style = MaterialTheme.typography.subtitle1, color = Color.Gray)
                 }
                 Box(
                     modifier = Modifier
@@ -50,7 +52,7 @@ fun HistoryList(
                         .weight(1f),
                     contentAlignment = Alignment.CenterEnd
                 ) {
-                    Text(text = convertDoubleToMoneyFormat(dateTotalBalance), style = MaterialTheme.typography.h6)
+                    Text(text = convertDoubleToMoney(dateTotalBalance), style = MaterialTheme.typography.h6)
                 }
 
             }
@@ -102,7 +104,13 @@ fun ReportRow(
                 .weight(1f),
             contentAlignment = Alignment.CenterEnd
         ) {
-            Text(text = convertDoubleToMoneyFormat(report.money), style = MaterialTheme.typography.body1)
+            Text(text = convertDoubleToMoney(report.money), style = MaterialTheme.typography.body1)
         }
     }
+}
+
+@Preview
+@Composable
+fun HistoryListPreview() {
+    HistoryList(reports = fakeReports, navToReportDetail = {})
 }

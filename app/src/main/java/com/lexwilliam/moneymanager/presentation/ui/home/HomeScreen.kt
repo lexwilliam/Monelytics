@@ -21,6 +21,7 @@ import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
+import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.*
 
 
@@ -35,6 +36,7 @@ fun HomeScreen(
     HomeContent(
         wallets = viewState.wallets,
         reports = viewState.reports,
+        isLoading = viewState.isLoading,
         navToAddWallet = { navToAddWallet() },
         navToWalletDetail = { navToWalletDetail(it) },
         navToReportDetail = { navToReportDetail(it) }
@@ -46,6 +48,7 @@ fun HomeScreen(
 fun HomeContent(
     wallets: List<WalletPresentation>,
     reports: List<ReportPresentation>,
+    isLoading: Boolean,
     navToAddWallet: () -> Unit,
     navToWalletDetail: (String) -> Unit,
     navToReportDetail: (Int) -> Unit
@@ -54,18 +57,42 @@ fun HomeContent(
         modifier = Modifier
             .background(MaterialTheme.colors.primary)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        HomeTopAppBar()
-        TotalBalance(wallets = wallets)
-        WalletCardRowList(wallets = wallets, navToWalletDetail = { navToWalletDetail(it) }, navToAddWallet = { navToAddWallet()})
-        Column(modifier = Modifier
-            .padding(top = 16.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .fillMaxWidth()
-            .wrapContentHeight()
-        ) {
-            HistoryList(modifier = Modifier.background(Color.White).padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 64.dp), reports = reports, navToReportDetail = { navToReportDetail(it) })
+        TotalBalance(modifier = Modifier.padding(top = 24.dp), wallets = wallets)
+        WalletCardRowList(wallets = wallets, isLoading = isLoading, navToWalletDetail = { navToWalletDetail(it) }, navToAddWallet = { navToAddWallet()})
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .background(color = MaterialTheme.colors.primary)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(24.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                        .background(Color.White)
+                )
+            }
+            if(reports.isNotEmpty()) {
+                HistoryList(
+                    modifier = Modifier
+                        .background(Color.White)
+                        .padding(start = 24.dp, end = 24.dp, bottom = 64.dp),
+                    reports = reports,
+                    navToReportDetail = { navToReportDetail(it) })
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Spacer(modifier = Modifier.padding(200.dp))
+                }
+            }
         }
     }
 }
@@ -99,21 +126,23 @@ fun HomeTopAppBar() {
 
 @Composable
 fun TotalBalance(
+    modifier: Modifier = Modifier,
     wallets: List<WalletPresentation>
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "TOTAL BALANCE", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
-        Text(text = convertDoubleToMoneyFormat(allWalletTotalBalance(wallets)), style = MaterialTheme.typography.h3, color = Color.White)
+        Text(text = convertDoubleToMoney(allWalletTotalBalance(wallets)), style = MaterialTheme.typography.h3, color = Color.White)
     }
 }
 
 @Composable
 fun WalletCardRowList(
     wallets: List<WalletPresentation>,
+    isLoading: Boolean,
     navToWalletDetail: (String) -> Unit,
     navToAddWallet: () -> Unit
 ) {
@@ -174,7 +203,7 @@ fun WalletCard(
             Text(text = wallet.name, style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.padding(36.dp))
             Text(text = "Balance", style = MaterialTheme.typography.caption)
-            Text(text = convertDoubleToMoneyFormat(walletTotalBalance(wallet)), style = MaterialTheme.typography.h5)
+            Text(text = convertDoubleToMoney(walletTotalBalance(wallet)), style = MaterialTheme.typography.h5)
         }
 //        Row(
 //            modifier = Modifier
@@ -215,9 +244,15 @@ fun AddWalletCard(
 
 @Preview
 @Composable
-fun WalletCardPreview() {
-    WalletCard(
-        wallet = WalletPresentation(name = "Test", iconId = R.drawable.account_balance_wallet_black_24dp, reports = emptyList()),
-        navToWalletDetail = {}
-    )
+fun HomeContentPreview() {
+    MoneyManagerTheme() {
+        HomeContent(
+            wallets = fakeWallets,
+            reports = emptyList(),
+            isLoading = false,
+            navToAddWallet = {},
+            navToWalletDetail = {},
+            navToReportDetail = {}
+        )
+    }
 }

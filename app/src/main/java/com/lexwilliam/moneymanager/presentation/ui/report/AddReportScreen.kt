@@ -76,7 +76,9 @@ fun AddReportContent(
 
             if(category.reportType == ReportType.Default) {
                 OutlinedTextField(
-                    modifier = Modifier.clickable { setEditCategoryScreen(true) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { setEditCategoryScreen(true) },
                     value = "Add Report Category",
                     onValueChange = {},
                     enabled = false

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface WalletDao {
 
     @Transaction
-    @Query("SELECT * FROM wallet ORDER BY name")
+    @Query("SELECT * FROM wallet ORDER BY timeAdded DESC")
     fun getAllWalletWithReport(): Flow<List<WalletWithReport>>
 
     @Transaction

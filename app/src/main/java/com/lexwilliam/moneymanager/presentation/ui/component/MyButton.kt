@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
@@ -24,13 +25,13 @@ fun DoneButton(
     Box(
         modifier = modifier
             .shadow(8.dp, MaterialTheme.shapes.medium, true)
-            .background(color = MaterialTheme.colors.primary)
+            .background(color = MaterialTheme.colors.secondaryVariant)
             .padding(16.dp)
             .fillMaxWidth()
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Done")
+        Text(text = "Done", color = Color.Black)
     }
 }
 

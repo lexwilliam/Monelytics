@@ -120,7 +120,7 @@ fun getWalletExpense(wallet: WalletPresentation): Double {
     return totalMoney
 }
 
-fun convertDoubleToMoneyFormat(num: Double): String {
+fun convertDoubleToMoney(num: Double): String {
     val numberFormat = NumberFormat.getCurrencyInstance()
     return numberFormat.format(num)
 }

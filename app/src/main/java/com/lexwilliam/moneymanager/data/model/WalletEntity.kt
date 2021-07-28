@@ -8,4 +8,5 @@ import androidx.room.Relation
 data class WalletEntity(
     @PrimaryKey val name: String,
     val iconId: Int,
+    val timeAdded: Long = System.currentTimeMillis()
 )
