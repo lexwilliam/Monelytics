@@ -17,6 +17,8 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
 
+val TAG = "TAG"
+
 val cardWidth = 200.dp
 val cardHeight = 270.dp
 

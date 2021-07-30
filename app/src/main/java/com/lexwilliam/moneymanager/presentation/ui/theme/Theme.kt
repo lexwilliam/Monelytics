@@ -35,7 +35,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun MoneyManagerTheme(
-    darkTheme: Boolean = false,
+//    darkTheme: Boolean = false,
     content: @Composable() () -> Unit
 ) {
     val colors = LightColorPalette

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "353727790616",
+    "project_id": "money-manager-942b2",
+    "storage_bucket": "money-manager-942b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353727790616:android:e9905072d9e0ad36e40d6d",
+        "android_client_info": {
+          "package_name": "com.lexwilliam.moneymanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353727790616-1m8u9gu2u2puoctt19pg1pamjqlb6vfp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lexwilliam.moneymanager",
+            "certificate_hash": "c6296b0cc726c12c98c0f1fe068bc39cf4b6029d"
+          }
+        },
+        {
+          "client_id": "353727790616-esf3kd65gc2veil0flgujoa6k4d9hlhm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOU5pHtJ6Z7GTI_eJps22h83wJ0D9MDN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353727790616-esf3kd65gc2veil0flgujoa6k4d9hlhm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

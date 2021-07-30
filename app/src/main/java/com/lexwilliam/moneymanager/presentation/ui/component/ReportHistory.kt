@@ -41,17 +41,13 @@ fun HistoryList(
             }
             Row {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
                     contentAlignment = Alignment.CenterStart
                 ) {
                     Text(text = time, style = MaterialTheme.typography.subtitle1, color = Color.Gray)
                 }
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                        .fillMaxWidth(),
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     Text(text = convertDoubleToMoney(dateTotalBalance), style = MaterialTheme.typography.h6)

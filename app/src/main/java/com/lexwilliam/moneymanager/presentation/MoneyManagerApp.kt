@@ -38,15 +38,27 @@ import com.mikepenz.iconics.compose.ExperimentalIconics
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
-fun MoneyManagerApp() {
-    MoneyManagerContent()
+fun MoneyManagerApp(
+    email: String?,
+    userName: String?,
+    userPhoto: String?
+) {
+    MoneyManagerContent(
+        email = email,
+        userName = userName,
+        userPhoto = userPhoto
+    )
 }
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
-fun MoneyManagerContent() {
+fun MoneyManagerContent(
+    email: String?,
+    userName: String?,
+    userPhoto: String?
+) {
     val navController = rememberNavController()
 
     data class BottomNavItem(

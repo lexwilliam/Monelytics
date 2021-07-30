@@ -1,11 +1,14 @@
 package com.lexwilliam.moneymanager
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,6 +36,7 @@ fun HomeScreen(
     navToReportDetail: (Int) -> Unit
 ) {
     val viewState by viewModel.state.collectAsState()
+    Log.d("TAG", viewState.wallets.toString())
     HomeContent(
         wallets = viewState.wallets,
         reports = viewState.reports,
@@ -248,7 +252,7 @@ fun HomeContentPreview() {
     MoneyManagerTheme() {
         HomeContent(
             wallets = fakeWallets,
-            reports = emptyList(),
+            reports = fakeReports,
             isLoading = false,
             navToAddWallet = {},
             navToWalletDetail = {},
