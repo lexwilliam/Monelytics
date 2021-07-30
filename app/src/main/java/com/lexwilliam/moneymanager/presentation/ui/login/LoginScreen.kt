@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -48,10 +49,11 @@ fun LoginScreen(
             ) {
                 Row(
                     modifier = Modifier.padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.ic_google), contentDescription = null)
-                    Text(text = "Sign in with Google", style = MaterialTheme.typography.body1)
+                    Image(painterResource(id = R.drawable.ic_google), contentDescription = null)
+                    Text(text = "Sign in with Google", style = MaterialTheme.typography.subtitle1)
                 }
             }
         }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.google.firebase.auth.FirebaseAuth
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.presentation.ui.login.LoginActivity
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_MoneyManager)
 
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser

@@ -113,6 +113,8 @@ fun MoneyManagerContent(
                 val homeViewModel = hiltViewModel<HomeViewModel>()
                 HomeScreen(
                     viewModel = homeViewModel,
+                    userName = userName,
+                    userPhoto = userPhoto,
                     navToReportDetail = { report_id ->
                         navController.navigate(
                             Screens.ReportScreen.route.plus("/?report_id=$report_id")
