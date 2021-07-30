@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyManager">
         <activity
-            android:name=".presentation.LoginActivity"
+            android:name=".presentation.ui.login.LoginActivity"
             android:exported="true" />
         <activity
             android:name=".presentation.MainActivity"

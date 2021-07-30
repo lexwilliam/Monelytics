@@ -26,23 +26,47 @@ class HomeViewModel
 @Inject constructor(
     private val getAllWalletUseCase: GetAllWalletUseCase,
     private val getAllReportUseCase: GetAllReportUseCase
-): ViewModel() {
+): BaseViewModel() {
+
+    override val coroutineExceptionHandler= CoroutineExceptionHandler { _, exception ->
+        val message = ExceptionHandler.parse(exception)
+    }
 
     private var _state = MutableStateFlow(HomeViewState())
     val state = _state.asStateFlow()
 
+    private var walletJob: Job? = null
+    private var reportJob: Job? = null
+
+    override fun onCleared() {
+        super.onCleared()
+        walletJob?.cancel()
+        reportJob?.cancel()
+    }
+
     init {
-        viewModelScope.launch {
-            val walletsFlow = getAllWalletUseCase.invoke()
-            val reportsFlow = getAllReportUseCase.invoke()
-            combine(walletsFlow, reportsFlow) { wallets, reports ->
-                val walletsPresentation = wallets.map { it.toPresentation() }
-                val reportsPresentation = reports.map { it.toPresentation() }
-                Log.d("TAG", walletsPresentation.toString())
-                HomeViewState(
-                    wallets = walletsPresentation,
-                    reports = reportsPresentation
-                )
+        walletJob?.cancel()
+        walletJob = launchCoroutine {
+            getAllWalletUseCase.invoke().collect { results ->
+                if(results.isEmpty()) {
+                    Log.d("TAG", "Get All Wallet Failed")
+                } else {
+                    Log.d("TAG", "Get All Wallet Success")
+                    val wallets = results.map { it.toPresentation() }
+                    _state.value = _state.value.copy(wallets = wallets)
+                }
+            }
+        }
+        reportJob?.cancel()
+        reportJob = launchCoroutine {
+            getAllReportUseCase.invoke().collect { results ->
+                if(results.isEmpty()) {
+                    Log.d("TAG", "Get All Wallet Failed")
+                } else {
+                    Log.d("TAG", "Get All Wallet Success")
+                    val reports = results.map { it.toPresentation() }
+                    _state.value = _state.value.copy(reports = reports)
+                }
             }
         }
     }
