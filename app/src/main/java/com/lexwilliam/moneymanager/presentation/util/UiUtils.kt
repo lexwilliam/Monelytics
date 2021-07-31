@@ -36,15 +36,6 @@ val walletIconResources: List<Int> = listOf(
     R.drawable.shopping_basket_black_24dp
 )
 
-fun fromColor(color: Color): String {
-    return "${color.red}/${color.blue}/${color.green}"
-}
-
-fun convertStringToColor(str: String): Color {
-    val arr = str.split("/")
-    return Color(arr[0].toFloat(), arr[1].toFloat(), arr[2].toFloat())
-}
-
 data class IncomeExpenseSummary(
     val income: Double,
     val expense: Double,
@@ -72,7 +63,7 @@ fun getThisMonthSummary(wallets: List<WalletPresentation>): IncomeExpenseSummary
 }
 
 @SuppressLint("SimpleDateFormat")
-fun convertLongToTime(time: Long, dateFormat: String, todayYesterday: Boolean = true): String {
+fun convertLongToTime(time: Long, dateFormat: String, todayYesterday: Boolean = false): String {
     val date = Date(time)
     val simpleFormat = SimpleDateFormat(dateFormat)
     val result = simpleFormat.format(date)

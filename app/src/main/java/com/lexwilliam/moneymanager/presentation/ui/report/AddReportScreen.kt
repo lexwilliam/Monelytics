@@ -28,7 +28,6 @@ import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
 import com.lexwilliam.moneymanager.presentation.ui.component.ReportIcon
-import com.lexwilliam.moneymanager.presentation.util.fromColor
 
 @ExperimentalComposeUiApi
 @Composable
