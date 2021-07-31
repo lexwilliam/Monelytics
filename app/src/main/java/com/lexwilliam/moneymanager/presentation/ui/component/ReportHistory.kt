@@ -80,9 +80,6 @@ fun ReportRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(3f),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -95,14 +92,13 @@ fun ReportRow(
             Column {
                 Text(text = report.name, style = MaterialTheme.typography.body1)
                 if(isWalletNameShow) {
-                    Text(text = report.walletName, style = MaterialTheme.typography.overline)
+                    Text(text = report.walletName, style = MaterialTheme.typography.body1, color = Color.Gray)
                 }
             }
         }
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+                .fillMaxWidth(),
             contentAlignment = Alignment.CenterEnd
         ) {
             Text(text = convertDoubleToMoney(report.money), style = MaterialTheme.typography.body1)

@@ -10,9 +10,9 @@ import com.lexwilliam.moneymanager.R
 
 
 val Ubuntu = FontFamily(
-    Font(R.font.ubuntu_light, FontWeight.Light),
-    Font(R.font.ubuntu_regular, FontWeight.Normal),
-    Font(R.font.ubuntu_medium, FontWeight.Medium)
+    Font(R.font.opensans_light, FontWeight.Light),
+    Font(R.font.opensans_regular, FontWeight.Normal),
+    Font(R.font.opensans_semibold, FontWeight.Medium)
 )
 // Set of Material typography styles to start with
 val Typography = Typography(
