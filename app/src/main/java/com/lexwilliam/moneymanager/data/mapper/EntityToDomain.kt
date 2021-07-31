@@ -15,5 +15,5 @@ internal fun WalletWithReport.toDomain(): Wallet {
 }
 
 internal fun ReportEntity.toDomain(): Report {
-    return Report(reportId, walletName, timeAdded, color, name, money, reportType)
+    return Report(reportId, walletName, timeAdded, iconId, name, money, reportType)
 }

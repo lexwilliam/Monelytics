@@ -7,7 +7,7 @@ data class ReportPresentation(
     val reportId: Int = 0,
     val walletName: String = "",
     val timeAdded: Long = System.currentTimeMillis(),
-    val color: String,
+    val iconId: Int,
     val name: String,
     val money: Double,
     val reportType: ReportType

@@ -7,7 +7,6 @@ import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportCategory
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.theme.*
 import java.text.NumberFormat
@@ -133,24 +132,24 @@ fun convertDoubleToMoney(num: Double): String {
 }
 
 val categoryList = listOf(
-    ReportCategory("Bills & Utilities", Color.LightGray, ReportType.Expense),
-    ReportCategory("Shopping", Color.Blue, ReportType.Expense),
-    ReportCategory("Food", Color.Yellow, ReportType.Expense),
-    ReportCategory("Transportation", Color.Black, ReportType.Expense),
-    ReportCategory("Gifts & Donations", Color.Red, ReportType.Expense),
-    ReportCategory("Travel", Color.Cyan, ReportType.Expense),
-    ReportCategory("Family", Color.Magenta, ReportType.Expense),
-    ReportCategory("Education", Color.Gray, ReportType.Expense),
-    ReportCategory("Investment", Color.DarkGray, ReportType.Expense),
-    ReportCategory("Business", Yellow400, ReportType.Expense),
-    ReportCategory("Insurance", LightYellow, ReportType.Expense),
-    ReportCategory("Fees & Charges", Color(185,84,45), ReportType.Expense),
-    ReportCategory("Withdrawal", Color(179,247,148), ReportType.Expense),
-    ReportCategory("Other Expense", Color(165,250,231), ReportType.Expense),
-    ReportCategory("Award", DarkYellow, ReportType.Income),
-    ReportCategory("Interest Money", LightGrey, ReportType.Income),
-    ReportCategory("Salary", Color(111,194,139), ReportType.Income),
-    ReportCategory("Gifts", Color.Green, ReportType.Income),
-    ReportCategory("Selling", Color(49,77,173), ReportType.Income),
-    ReportCategory("Other Income", Color(134,156,113), ReportType.Income)
+    ReportCategory("Bills & Utilities", R.drawable.report_invoice, ReportType.Expense),
+    ReportCategory("Shopping", R.drawable.report_shopping_cart, ReportType.Expense),
+    ReportCategory("Food", R.drawable.report_fork, ReportType.Expense),
+    ReportCategory("Transportation", R.drawable.report_delivery, ReportType.Expense),
+    ReportCategory("Gifts & Donations", R.drawable.report_heart, ReportType.Expense),
+    ReportCategory("Travel", R.drawable.report_around, ReportType.Expense),
+    ReportCategory("Family", R.drawable.report_family, ReportType.Expense),
+    ReportCategory("Education", R.drawable.report_graduation_hat, ReportType.Expense),
+    ReportCategory("Investment", R.drawable.report_profits, ReportType.Expense),
+    ReportCategory("Business", R.drawable.report_hand_shake, ReportType.Expense),
+    ReportCategory("Insurance", R.drawable.report_insurance, ReportType.Expense),
+    ReportCategory("Fees & Charges", R.drawable.report_fees, ReportType.Expense),
+    ReportCategory("Withdrawal", R.drawable.report_withdrawal, ReportType.Expense),
+    ReportCategory("Other Expense", R.drawable.report_file, ReportType.Expense),
+    ReportCategory("Award", R.drawable.report_medal, ReportType.Income),
+    ReportCategory("Interest Money", R.drawable.report_tax, ReportType.Income),
+    ReportCategory("Salary", R.drawable.report_salary, ReportType.Income),
+    ReportCategory("Gifts", R.drawable.report_gift_box, ReportType.Income),
+    ReportCategory("Selling", R.drawable.report_selling, ReportType.Income),
+    ReportCategory("Other Income", R.drawable.report_file, ReportType.Income)
 )

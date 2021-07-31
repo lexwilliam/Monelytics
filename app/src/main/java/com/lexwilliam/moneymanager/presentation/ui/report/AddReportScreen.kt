@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -15,14 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
+import com.lexwilliam.moneymanager.presentation.ui.component.ReportIcon
 import com.lexwilliam.moneymanager.presentation.util.fromColor
 
 @ExperimentalComposeUiApi
@@ -32,7 +37,7 @@ fun AddReportScreen(
     onBackPressed: () -> Unit
 ) {
     val viewState by viewModel.state.collectAsState()
-    var category by remember { mutableStateOf(ReportCategory("", Color.Black, reportType = ReportType.Default)) }
+    var category by remember { mutableStateOf(ReportCategory("", R.drawable.report_file, reportType = ReportType.Default)) }
     var isEditCategoryShown by remember { mutableStateOf(false) }
     
     AddReportContent(
@@ -88,13 +93,7 @@ fun AddReportContent(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .size(16.dp)
-                            .clip(CircleShape)
-                            .background(category.color)
-                    )
+                    ReportIcon(iconId = category.iconId)
                     OutlinedTextField(modifier = Modifier
                         .fillMaxWidth(),
                         value = category.name,
@@ -140,7 +139,7 @@ fun AddReportContent(
                         ReportPresentation(
                             walletName = walletName,
                             timeAdded = System.currentTimeMillis(),
-                            color = fromColor(category.color),
+                            iconId = category.iconId,
                             name = category.name,
                             money = moneyText.toDouble(),
                             reportType = category.reportType
@@ -151,4 +150,19 @@ fun AddReportContent(
             )
         }
     }
+}
+
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+fun AddReportPreview() {
+    AddReportContent(
+        walletName = "Wallet 1",
+        isEditCategoryShown = false,
+        setEditCategoryScreen = {},
+        category = ReportCategory("Salary", R.drawable.report_salary, ReportType.Income),
+        setCategory =  {},
+        insertReport = {},
+        onBackPressed = {}
+    )
 }

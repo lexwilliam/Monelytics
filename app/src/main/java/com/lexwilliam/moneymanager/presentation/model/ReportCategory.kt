@@ -5,7 +5,7 @@ import com.lexwilliam.moneymanager.data.model.ReportType
 
 data class ReportCategory(
     val name: String,
-    val color: Color,
+    val iconId: Int,
     val reportType: ReportType
 )
 

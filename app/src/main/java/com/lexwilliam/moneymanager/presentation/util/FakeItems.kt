@@ -8,7 +8,7 @@ import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 val fakeReport = ReportPresentation(
     reportId = 0,
     walletName = "Wallet 1",
-    color = "0.0/0.0/0.0",
+    iconId = R.drawable.report_file,
     name = "Report 1",
     money = 100.0,
     reportType = ReportType.Income
@@ -18,7 +18,7 @@ val fakeReports = listOf(
     ReportPresentation(
         reportId = 0,
         walletName = "Wallet 1",
-        color = "0.0/0.0/0.0",
+        iconId = R.drawable.report_file,
         name = "Report 1",
         money = 100.0,
         reportType = ReportType.Income
@@ -26,7 +26,7 @@ val fakeReports = listOf(
     ReportPresentation(
         reportId = 1,
         walletName = "Wallet 1",
-        color = "0.0/0.0/0.0",
+        iconId = R.drawable.report_file,
         name = "Report 2",
         money = 50.0,
         reportType = ReportType.Expense
@@ -34,7 +34,7 @@ val fakeReports = listOf(
     ReportPresentation(
         reportId = 2,
         walletName = "Wallet 2",
-        color = "0.0/0.0/0.0",
+        iconId = R.drawable.report_file,
         name = "Report 3",
         money = 50.0,
         reportType = ReportType.Expense
@@ -42,7 +42,7 @@ val fakeReports = listOf(
     ReportPresentation(
         reportId = 3,
         walletName = "Wallet 2",
-        color = "0.0/0.0/0.0",
+        iconId = R.drawable.report_file,
         name = "Report 4",
         money = 25.0,
         reportType = ReportType.Income

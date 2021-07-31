@@ -15,9 +15,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportCategory
+import com.lexwilliam.moneymanager.presentation.ui.component.ReportIcon
 import com.lexwilliam.moneymanager.presentation.util.categoryList
 
 @Composable
@@ -26,21 +29,6 @@ fun EditReportCategoryScreen(
 ) {
 //    var isSearchBarShown by remember { mutableStateOf(false) }
     Column {
-        TopAppBar(
-            title = {
-                Text("Select Report Category") },
-            actions = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.Search, contentDescription = null)
-                }
-            },
-            navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = null)
-                }
-            }
-        )
-
         var tabRowStatus by remember { mutableStateOf("Expense") }
         CategoryTabRow(status = tabRowStatus, setReportType = {
             tabRowStatus = it
@@ -106,10 +94,15 @@ fun CategoryRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(modifier = Modifier
-            .clip(CircleShape)
-            .background(category.color)
-            .height(IntrinsicSize.Max))
-        Text(text = category.name, style = MaterialTheme.typography.h6)
+        ReportIcon(iconId = category.iconId)
+        Text(text = category.name, style = MaterialTheme.typography.subtitle1)
     }
+}
+
+@Preview
+@Composable
+fun EditReportCategoryPreveiw() {
+    EditReportCategoryScreen(
+        setCategory = {}
+    )
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
+import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoney
 import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
 import com.lexwilliam.moneymanager.presentation.util.convertStringToColor
@@ -59,6 +60,7 @@ fun HistoryList(
                 ReportRow(report = report, isWalletNameShow = isWalletNameShow) {
                     navToReportDetail(it)
                 }
+                Spacer(modifier = Modifier.padding(0.dp))
             }
         }
     }
@@ -83,12 +85,7 @@ fun ReportRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .size(12.dp)
-                    .clip(CircleShape)
-                    .background(convertStringToColor(report.color))
-            )
+            ReportIcon(iconId = report.iconId)
             Column {
                 Text(text = report.name, style = MaterialTheme.typography.body1)
                 if(isWalletNameShow) {
@@ -109,5 +106,7 @@ fun ReportRow(
 @Preview
 @Composable
 fun HistoryListPreview() {
-    HistoryList(reports = fakeReports, navToReportDetail = {}, isWalletNameShow = true)
+   MoneyManagerTheme {
+       HistoryList(reports = fakeReports, navToReportDetail = {}, isWalletNameShow = true)
+   }
 }

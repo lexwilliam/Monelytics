@@ -7,7 +7,7 @@ data class Report(
     val reportId: Int,
     val walletName: String,
     val timeAdded: Long,
-    val color: String,
+    val iconId: Int,
     val name: String,
     val money: Double,
     val reportType: ReportType

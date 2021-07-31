@@ -14,7 +14,7 @@ internal fun Report.toEntity(): ReportEntity {
         reportId = reportId,
         walletName = walletName,
         timeAdded = timeAdded,
-        color = color,
+        iconId = iconId,
         name = name,
         money = money,
         reportType = reportType

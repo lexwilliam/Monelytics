@@ -2,6 +2,7 @@ package com.lexwilliam.moneymanager.presentation.ui.report
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
+import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.domain.usecase.GetReportByIdUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
@@ -52,5 +53,5 @@ class ReportViewModel
 }
 
 data class ReportViewState(
-    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, color = "", reportType = ReportType.Default, timeAdded = 0)
+    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, iconId = R.drawable.report_file, reportType = ReportType.Default, timeAdded = 0)
 )
