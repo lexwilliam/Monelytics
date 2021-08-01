@@ -28,6 +28,7 @@ import com.lexwilliam.moneymanager.presentation.model.ReportCategory
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
 import com.lexwilliam.moneymanager.presentation.ui.component.ReportIcon
+import java.time.LocalDate
 
 @ExperimentalComposeUiApi
 @Composable
@@ -137,7 +138,7 @@ fun AddReportContent(
                     insertReport(
                         ReportPresentation(
                             walletName = walletName,
-                            timeAdded = System.currentTimeMillis(),
+                            timeAdded = LocalDate.now(),
                             iconId = category.iconId,
                             name = category.name,
                             money = moneyText.toDouble(),

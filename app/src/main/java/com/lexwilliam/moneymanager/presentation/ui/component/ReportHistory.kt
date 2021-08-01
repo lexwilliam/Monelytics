@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.convertDoubleToMoney
-import com.lexwilliam.moneymanager.presentation.util.convertLongToTime
 import com.lexwilliam.moneymanager.presentation.util.fakeReports
+import com.lexwilliam.moneymanager.presentation.util.formatDateToString
 
 @Composable
 fun HistoryList(
@@ -30,7 +30,7 @@ fun HistoryList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         val sortedReport = reports.sortedByDescending { it.timeAdded }
-        val groupedReports = sortedReport.groupBy { convertLongToTime(it.timeAdded, "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
+        val groupedReports = sortedReport.groupBy { formatDateToString(date = it.timeAdded!!, dateFormat = "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
         groupedReports.forEach { (time, groupOfReport) ->
             var dateTotalBalance = 0.0
             groupOfReport.forEach {

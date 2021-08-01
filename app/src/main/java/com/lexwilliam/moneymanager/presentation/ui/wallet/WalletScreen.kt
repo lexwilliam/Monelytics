@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -100,7 +101,7 @@ fun WalletContent(
             ) {
                 WalletTabRow(status = currentDate, wallet = wallet, setTime = { setDate(it) })
                 if(wallet.reports.isNotEmpty()) {
-                    val reports = wallet.reports.filter { convertLongToTime(it.timeAdded, "MMMM yyyy", false) == currentDate }
+                    val reports = wallet.reports.filter { formatDateToString(it.timeAdded!!, "MMMM yyyy", false) == currentDate }
                     Log.d("reportTAG", reports.toString())
                     HistoryList(
                         modifier = Modifier.padding(horizontal = 24.dp),
@@ -138,7 +139,7 @@ fun WalletTopBar(
             contentAlignment = Alignment.CenterEnd
         ) {
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.Settings, contentDescription = null, tint = Color.White)
+                Icon(Icons.Outlined.Menu, contentDescription = null, tint = Color.White)
             }
         }
     }
@@ -285,8 +286,7 @@ fun WalletTabRow(
 }
 
 fun configureTabRowItems(wallet: WalletPresentation): List<String> {
-    val groupedList =
-        wallet.reports.groupBy { convertLongToTime(it.timeAdded, "MMMM yyyy", false) }
+    val groupedList = wallet.reports.groupBy { formatDateToString(it.timeAdded!!, "MMMM yyyy", false) }
     val onlyMonths = groupedList.map { it.key }
     val resultList = mutableListOf<String>()
     onlyMonths.forEach { month ->

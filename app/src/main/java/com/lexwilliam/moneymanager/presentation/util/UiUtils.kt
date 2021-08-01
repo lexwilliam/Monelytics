@@ -21,7 +21,7 @@ val TAG = "TAG"
 val cardWidth = 200.dp
 val cardHeight = 270.dp
 
-val thisMonth = convertLongToTime(System.currentTimeMillis(), "MMMM yyyy", false)
+val thisMonth = formatDateToString(LocalDate.now(), "MMMM yyyy", false)
 
 fun getMonthsNameFromYear(year: Int): List<String> {
     return listOf("January $year", "February $year", "March $year", "April $year", "May $year", "June $year", "July $year", "August $year", "September $year", "October $year", "November $year", "December $year",)
@@ -46,7 +46,7 @@ fun getThisMonthSummary(wallets: List<WalletPresentation>): IncomeExpenseSummary
     var income = +0.0
     var expense = -0.0
     wallets.forEach { wallet ->
-        val groupedReport = wallet.reports.groupBy { convertLongToTime(it.timeAdded, "MMM yyyy", false) }
+        val groupedReport = wallet.reports.groupBy { formatDateToString(it.timeAdded!!, "MMM yyyy", false) }
         groupedReport.forEach { month , reports ->
             if(month == thisMonth) {
                 reports.forEach { report ->
@@ -62,13 +62,10 @@ fun getThisMonthSummary(wallets: List<WalletPresentation>): IncomeExpenseSummary
     return IncomeExpenseSummary(income, expense)
 }
 
-@SuppressLint("SimpleDateFormat")
-fun convertLongToTime(time: Long, dateFormat: String, todayYesterday: Boolean = false): String {
-    val date = Date(time)
-    val simpleFormat = SimpleDateFormat(dateFormat)
-    val result = simpleFormat.format(date)
+fun formatDateToString(date: LocalDate, dateFormat: String, todayYesterday: Boolean = false): String {
+    val formatter = DateTimeFormatter.ofPattern(dateFormat)
+    val result = date.format(formatter)
     if(todayYesterday) {
-        val formatter = DateTimeFormatter.ofPattern(dateFormat)
         val today = LocalDate.now().format(formatter)
         val yesterday = LocalDate.now().minus(1, ChronoUnit.DAYS).format(formatter)
         when(result) {

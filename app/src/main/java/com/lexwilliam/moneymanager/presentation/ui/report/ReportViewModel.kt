@@ -15,6 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,5 +54,5 @@ class ReportViewModel
 }
 
 data class ReportViewState(
-    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, iconId = R.drawable.report_file, reportType = ReportType.Default, timeAdded = 0)
+    val report: ReportPresentation = ReportPresentation(name = "", money = -1.0, iconId = R.drawable.report_file, reportType = ReportType.Default, timeAdded = LocalDate.now())
 )
