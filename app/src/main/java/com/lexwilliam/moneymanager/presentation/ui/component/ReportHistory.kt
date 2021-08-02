@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -29,11 +30,12 @@ fun HistoryList(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        val sortedReport = reports.sortedByDescending { it.timeAdded }
-        val groupedReports = sortedReport.groupBy { formatDateToString(date = it.timeAdded!!, dateFormat = "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
+        val sortedReports = reports.sortedByDescending { it.timeAdded }
+        val groupedReports = sortedReports.groupBy { formatDateToString(date = it.timeAdded!!, dateFormat = "EEE, dd MMM yyyy", todayYesterday = todayEnabled) }
         groupedReports.forEach { (time, groupOfReport) ->
+            val sortByTime = groupOfReport.sortedByDescending { it.reportId }
             var dateTotalBalance = 0.0
-            groupOfReport.forEach {
+            sortByTime.forEach {
                 dateTotalBalance += it.money
             }
             Row {
@@ -52,7 +54,8 @@ fun HistoryList(
 
             }
             Divider()
-            groupOfReport.forEach { report ->
+            Log.d("History List", sortByTime.toString())
+            sortByTime.forEach { report ->
                 ReportRow(report = report, isWalletNameShow = isWalletNameShow) {
                     navToReportDetail(it)
                 }
@@ -85,7 +88,7 @@ fun ReportRow(
             Column {
                 Text(text = report.name, style = MaterialTheme.typography.body1)
                 if(isWalletNameShow) {
-                    Text(text = report.walletName, style = MaterialTheme.typography.body1, color = Color.Gray)
+                    Text(text = report.walletName, style = MaterialTheme.typography.overline, color = Color.Gray)
                 }
             }
         }

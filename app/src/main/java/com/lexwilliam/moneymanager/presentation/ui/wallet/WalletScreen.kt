@@ -87,8 +87,6 @@ fun WalletContent(
                             Icon(painter = painterResource(id = wallet.iconId), contentDescription = null)
                             Spacer(modifier = Modifier.padding(4.dp))
                             Text(text = wallet.name, style = MaterialTheme.typography.subtitle1)
-                            Spacer(modifier = Modifier.padding(4.dp))
-                            Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
                         }
                     }
                     WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
@@ -285,7 +283,7 @@ fun WalletTabRow(
     }
 }
 
-fun configureTabRowItems(wallet: WalletPresentation): List<String> {
+private fun configureTabRowItems(wallet: WalletPresentation): List<String> {
     val groupedList = wallet.reports.groupBy { formatDateToString(it.timeAdded!!, "MMMM yyyy", false) }
     val onlyMonths = groupedList.map { it.key }
     val resultList = mutableListOf<String>()
