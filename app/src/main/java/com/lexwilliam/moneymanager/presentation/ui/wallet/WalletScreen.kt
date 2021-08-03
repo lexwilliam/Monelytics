@@ -25,6 +25,7 @@ import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
+import com.lexwilliam.moneymanager.presentation.ui.component.MyBarChart
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.*
 
@@ -89,7 +90,8 @@ fun WalletContent(
                             Text(text = wallet.name, style = MaterialTheme.typography.subtitle1)
                         }
                     }
-                    WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
+//                    WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
+                    MyBarChart(reports = wallet.reports)
                 }
             }
             Column(
