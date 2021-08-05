@@ -64,53 +64,25 @@ fun WalletContent(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        Column {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            ) {
-                Column(
-                    Modifier.background(MaterialTheme.colors.primary),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    WalletTopBar(modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
-                    Column(Modifier.padding(horizontal = 24.dp)) {
-                        Row(
-                            modifier = Modifier
-                                .clip(MaterialTheme.shapes.medium)
-                                .fillMaxWidth()
-                                .padding(1.dp)
-                                .background(MaterialTheme.colors.secondary),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(painter = painterResource(id = wallet.iconId), contentDescription = null)
-                            Spacer(modifier = Modifier.padding(4.dp))
-                            Text(text = wallet.name, style = MaterialTheme.typography.subtitle1)
-                        }
-                    }
-//                    WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
-                    MyBarChart(reports = wallet.reports)
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                WalletTabRow(status = currentDate, wallet = wallet, setTime = { setDate(it) })
-                if(wallet.reports.isNotEmpty()) {
-                    val reports = wallet.reports.filter { formatDateToString(it.timeAdded!!, "MMMM yyyy", false) == currentDate }
-                    Log.d("reportTAG", reports.toString())
-                    HistoryList(
-                        modifier = Modifier.padding(horizontal = 24.dp),
-                        reports = reports,
-                        navToReportDetail = { navToReportDetail(it) },
-                        todayEnabled = false,
-                        isWalletNameShow = false
-                    )
-                }
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            WalletTopBar(modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
+            WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
+            MyBarChart(reports = wallet.reports)
+            WalletTabRow(status = currentDate, wallet = wallet, setTime = { setDate(it) })
+            if(wallet.reports.isNotEmpty()) {
+                val reports = wallet.reports.filter { formatDateToString(it.timeAdded!!, "MMMM yyyy", false) == currentDate }
+                Log.d("reportTAG", reports.toString())
+                HistoryList(
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                    reports = reports,
+                    navToReportDetail = { navToReportDetail(it) },
+                    todayEnabled = false,
+                    isWalletNameShow = false
+                )
             }
         }
     }
@@ -131,7 +103,7 @@ fun WalletTopBar(
                 .weight(2f),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = "Insights", style = MaterialTheme.typography.h4, color = Color.White)
+            Text(text = "Insights", style = MaterialTheme.typography.h4)
         }
         Box(
             Modifier
@@ -139,7 +111,7 @@ fun WalletTopBar(
             contentAlignment = Alignment.CenterEnd
         ) {
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.Menu, contentDescription = null, tint = Color.White)
+                Icon(Icons.Outlined.Menu, contentDescription = null)
             }
         }
     }
@@ -158,8 +130,8 @@ fun WalletSummary(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Column {
-            Text(text = "WALLET BALANCE", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
-            Text(text = convertDoubleToMoney(walletTotalBalance(wallet)), style = MaterialTheme.typography.h5, color = Color.White)
+            Text(text = "WALLET BALANCE", style = MaterialTheme.typography.overline)
+            Text(text = convertDoubleToMoney(walletTotalBalance(wallet)), style = MaterialTheme.typography.h5)
         }
         Row(
             modifier = Modifier
@@ -173,7 +145,7 @@ fun WalletSummary(
                 contentAlignment = Alignment.CenterStart
             ) {
                 Column {
-                    Text(text = "Income", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
+                    Text(text = "Income", style = MaterialTheme.typography.overline)
                     Text(text = convertDoubleToMoney(income), style = MaterialTheme.typography.subtitle1, color = Color.Green)
                 }
             }
@@ -183,7 +155,7 @@ fun WalletSummary(
                 contentAlignment = Alignment.CenterStart
             ) {
                 Column {
-                    Text(text = "Expense", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
+                    Text(text = "Expense", style = MaterialTheme.typography.overline)
                     Text(text = convertDoubleToMoney(expense), style = MaterialTheme.typography.subtitle1, color = Color.Red)
                 }
             }
@@ -193,8 +165,8 @@ fun WalletSummary(
                 contentAlignment = Alignment.CenterStart
             ) {
                 Column {
-                    Text(text = "Total", style = MaterialTheme.typography.overline, color = MaterialTheme.colors.secondary)
-                    Text(text = convertDoubleToMoney(total), style = MaterialTheme.typography.subtitle1, color = Color.White)
+                    Text(text = "Total", style = MaterialTheme.typography.overline)
+                    Text(text = convertDoubleToMoney(total), style = MaterialTheme.typography.subtitle1)
                 }
             }
         }

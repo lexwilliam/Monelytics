@@ -18,6 +18,8 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticScreen
+import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticViewModel
 import com.lexwilliam.moneymanager.HomeScreen
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
@@ -68,6 +70,7 @@ fun MoneyManagerContent(
 
     val bottomNavIcons = listOf(
         BottomNavItem(R.drawable.account_filled_balance_wallet_black_24dp, R.drawable.account_balance_wallet_black_24dp, Screens.HomeScreen.route, "Home"),
+        BottomNavItem(R.drawable.analytics_filled_black_24dp, R.drawable.analytics_black_24dp, Screens.AnalyticScreen.route, "Analytic"),
         BottomNavItem(R.drawable.subscriptions_filled_black_24dp, R.drawable.subscriptions_black_24dp, Screens.RecurringScreen.route, "Recurring"),
         BottomNavItem(R.drawable.settings_filled_black_24dp, R.drawable.settings_black_24dp, Screens.ProfileScreen.route, "Profile")
     )
@@ -200,6 +203,17 @@ fun MoneyManagerContent(
                 )
             }
 
+            // ANALYTIC CONTENT
+            // ANALYTIC SCREEN
+            composable(
+                route = Screens.AnalyticScreen.route
+            ) {
+                val analyticViewModel = hiltViewModel<AnalyticViewModel>()
+                AnalyticScreen(
+                    viewModel = analyticViewModel
+                )
+            }
+
             // RECURRING CONTENT
             // RECURRING SCREEN
             composable(
@@ -227,6 +241,7 @@ fun MoneyManagerContent(
 
 sealed class Screens(val route: String) {
     object HomeScreen : Screens("home")
+    object AnalyticScreen: Screens("analytic")
     object RecurringScreen: Screens("recurring")
     object ProfileScreen: Screens("profile")
     object WalletScreen: Screens("wallet")
