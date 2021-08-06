@@ -49,17 +49,3 @@ fun AnalyticContent(
         MyBarChart(reports = reports)
     }
 }
-
-@Composable
-fun RoundedBoxContainer(
-    content: @Composable () -> Unit,
-    color: Color = Color.White
-) {
-    Box(
-        modifier = Modifier
-            .padding(16.dp)
-            .shadow(4.dp, MaterialTheme.shapes.medium, true)
-    ) {
-
-    }
-}

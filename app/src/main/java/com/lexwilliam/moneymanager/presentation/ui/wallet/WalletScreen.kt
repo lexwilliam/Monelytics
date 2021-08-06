@@ -20,15 +20,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
 import com.lexwilliam.moneymanager.presentation.ui.component.MyBarChart
+import com.lexwilliam.moneymanager.presentation.ui.component.RoundedBoxContainer
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.*
 
+@ExperimentalPagerApi
 @Composable
 fun WalletScreen(
     viewModel: WalletViewModel = viewModel(),
@@ -37,9 +42,11 @@ fun WalletScreen(
 ) {
     val viewState by viewModel.state.collectAsState()
     var currentDate by remember { mutableStateOf(thisMonth) }
-    Log.d("TAG", currentDate)
+    val filterReportsByDate = viewState.wallet.reports.filter { formatDateToString(it.timeAdded!!, "MMMM yyyy") == currentDate }
+
     WalletContent(
         wallet = viewState.wallet,
+        reports = filterReportsByDate,
         currentDate = currentDate,
         setDate = { currentDate = it },
         navToAddReport = { navToAddReport(it) },
@@ -47,9 +54,11 @@ fun WalletScreen(
     )
 }
 
+@ExperimentalPagerApi
 @Composable
 fun WalletContent(
     wallet: WalletPresentation,
+    reports: List<ReportPresentation>,
     currentDate: String,
     setDate: (String) -> Unit,
     navToAddReport: (String) -> Unit,
@@ -67,14 +76,25 @@ fun WalletContent(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             WalletTopBar(modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
-            WalletSummary(modifier = Modifier.padding(bottom = 24.dp, start = 24.dp, end = 24.dp), wallet = wallet)
-            MyBarChart(reports = wallet.reports)
             WalletTabRow(status = currentDate, wallet = wallet, setTime = { setDate(it) })
+
+            val pagerState = rememberPagerState(pageCount = 2)
+            HorizontalPager(state = pagerState) { page ->
+                when(page) {
+                    0 -> RoundedBoxContainer(modifier = Modifier.fillMaxWidth().height(240.dp).padding(horizontal = 24.dp)) {
+                        WalletSummary(modifier = Modifier.padding(horizontal = 24.dp), wallet = wallet, reports = reports)
+                    }
+
+                    1 -> RoundedBoxContainer(modifier = Modifier.fillMaxWidth().height(240.dp).padding(horizontal = 24.dp)) {
+                        MyBarChart(reports = reports)
+                    }
+                }
+            }
+
             if(wallet.reports.isNotEmpty()) {
-                val reports = wallet.reports.filter { formatDateToString(it.timeAdded!!, "MMMM yyyy", false) == currentDate }
                 Log.d("reportTAG", reports.toString())
                 HistoryList(
                     modifier = Modifier.padding(horizontal = 24.dp),
@@ -103,7 +123,7 @@ fun WalletTopBar(
                 .weight(2f),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = "Insights", style = MaterialTheme.typography.h4)
+            Text(text = wallet.name, style = MaterialTheme.typography.h4)
         }
         Box(
             Modifier
@@ -120,10 +140,18 @@ fun WalletTopBar(
 @Composable
 fun WalletSummary(
     modifier: Modifier = Modifier,
-    wallet: WalletPresentation
+    wallet: WalletPresentation,
+    reports: List<ReportPresentation>
 ) {
-    val income = getWalletIncome(wallet)
-    val expense = getWalletExpense(wallet)
+    var income = 0.0
+    var expense = 0.0
+    reports.forEach {
+        when(it.reportType) {
+            ReportType.Income -> income += it.money
+            ReportType.Expense -> expense -= it.money
+            else -> Log.d("WalletSummary", "Report Type Not Found")
+        }
+    }
     val total = income + expense
     Column(
         modifier = modifier,
@@ -272,10 +300,11 @@ private fun configureTabRowItems(wallet: WalletPresentation): List<String> {
     return resultList
 }
 
+@ExperimentalPagerApi
 @Preview
 @Composable
 fun WalletContentPreview() {
     MoneyManagerTheme {
-        WalletContent(wallet = fakeWallet, currentDate = "", setDate = {}, navToAddReport = {}, navToReportDetail = {})
+        WalletContent(wallet = fakeWallet, reports = fakeReports, currentDate = "", setDate = {}, navToAddReport = {}, navToReportDetail = {})
     }
 }

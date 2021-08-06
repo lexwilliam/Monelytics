@@ -2,38 +2,36 @@ package com.lexwilliam.moneymanager.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticScreen
-import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticViewModel
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.lexwilliam.moneymanager.HomeScreen
 import com.lexwilliam.moneymanager.R
+import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticScreen
+import com.lexwilliam.moneymanager.presentation.ui.analytic.AnalyticViewModel
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
 import com.lexwilliam.moneymanager.presentation.ui.profile.ProfileScreen
 import com.lexwilliam.moneymanager.presentation.ui.profile.ProfileViewModel
 import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringScreen
 import com.lexwilliam.moneymanager.presentation.ui.recurring.RecurringViewModel
-import com.lexwilliam.moneymanager.presentation.ui.report.*
+import com.lexwilliam.moneymanager.presentation.ui.report.AddReportScreen
+import com.lexwilliam.moneymanager.presentation.ui.report.AddReportViewModel
+import com.lexwilliam.moneymanager.presentation.ui.report.ReportScreen
+import com.lexwilliam.moneymanager.presentation.ui.report.ReportViewModel
 import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletViewModel
-import com.mikepenz.iconics.compose.ExperimentalIconics
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
@@ -50,6 +48,7 @@ fun MoneyManagerApp(
     )
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi

@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.firebase.auth.FirebaseAuth
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.presentation.ui.login.LoginActivity
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var mAuth: FirebaseAuth
 
+    @ExperimentalPagerApi
     @ExperimentalFoundationApi
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
