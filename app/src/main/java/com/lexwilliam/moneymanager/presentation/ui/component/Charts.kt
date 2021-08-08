@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -37,13 +38,13 @@ fun MyBarChart(
                 val incomeEntries = mutableListOf<BarEntry>()
                 val expenseEntries = mutableListOf<BarEntry>()
                 var currentIndex = 1f
-                groupedReports.values.forEach { report ->
+                groupedReports.values.forEach { reports ->
                     var income = 0f
                     var expense = 0f
-                    report.forEach {
-                        when(it.reportType) {
-                            ReportType.Income -> income += it.money.toFloat()
-                            ReportType.Expense -> expense -= it.money.toFloat()
+                    reports.forEach { report ->
+                        when(report.reportType) {
+                            ReportType.Income -> income += report.money.toFloat()
+                            ReportType.Expense -> expense -= report.money.toFloat()
                             else -> Log.d("BarChart", "ReportType is Default")
                         }
                     }
@@ -66,6 +67,29 @@ fun MyBarChart(
                 isLogEnabled = true
                 notifyDataSetChanged()
                 invalidate()
+            }
+        }
+    )
+}
+
+@Composable
+fun MyPieChart(
+    reports: List<ReportPresentation>
+) {
+    val groupedReportsByName = reports.groupBy { it.name }
+    AndroidView(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .padding(horizontal = 24.dp),
+        factory = { context ->
+            PieChart(context)
+        },
+        update = {
+            it.apply {
+                groupedReportsByName.forEach { (name, report) ->
+
+                }
             }
         }
     )

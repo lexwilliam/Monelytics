@@ -84,11 +84,17 @@ fun WalletContent(
             val pagerState = rememberPagerState(pageCount = 2)
             HorizontalPager(state = pagerState) { page ->
                 when(page) {
-                    0 -> RoundedBoxContainer(modifier = Modifier.fillMaxWidth().height(240.dp).padding(horizontal = 24.dp)) {
+                    0 -> RoundedBoxContainer(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(240.dp)
+                        .padding(horizontal = 24.dp)) {
                         WalletSummary(modifier = Modifier.padding(horizontal = 24.dp), wallet = wallet, reports = reports)
                     }
 
-                    1 -> RoundedBoxContainer(modifier = Modifier.fillMaxWidth().height(240.dp).padding(horizontal = 24.dp)) {
+                    1 -> RoundedBoxContainer(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(240.dp)
+                        .padding(horizontal = 24.dp)) {
                         MyBarChart(reports = reports)
                     }
                 }
@@ -104,6 +110,7 @@ fun WalletContent(
                     isWalletNameShow = false
                 )
             }
+            Spacer(modifier = Modifier.padding(32.dp))
         }
     }
 }

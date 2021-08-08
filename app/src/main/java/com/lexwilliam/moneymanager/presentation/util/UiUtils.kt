@@ -16,8 +16,6 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
 
-val TAG = "TAG"
-
 val cardWidth = 200.dp
 val cardHeight = 270.dp
 
@@ -92,26 +90,6 @@ fun allWalletTotalBalance(wallets: List<WalletPresentation>): Double {
         }
     }
     return totalBalance
-}
-
-fun getWalletIncome(wallet: WalletPresentation): Double {
-    var totalMoney = 0.0
-    wallet.reports.forEach { report ->
-        if(report.reportType == ReportType.Income) {
-            totalMoney += report.money
-        }
-    }
-    return totalMoney
-}
-
-fun getWalletExpense(wallet: WalletPresentation): Double {
-    var totalMoney = 0.0
-    wallet.reports.forEach { report ->
-        if(report.reportType == ReportType.Expense) {
-            totalMoney += report.money
-        }
-    }
-    return totalMoney
 }
 
 fun convertDoubleToMoney(num: Double): String {

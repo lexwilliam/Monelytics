@@ -1,6 +1,8 @@
 package com.lexwilliam.moneymanager.data.repository
 
 import android.util.Log
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.lexwilliam.moneymanager.data.dao.WalletDao
 import com.lexwilliam.moneymanager.data.mapper.toDomain
 import com.lexwilliam.moneymanager.data.mapper.toEntity
@@ -14,6 +16,32 @@ import kotlinx.coroutines.flow.flow
 class WalletRepository(
     private val walletDao: WalletDao
 ): IWalletRepository {
+    private val firestore = Firebase.firestore
+
+    fun insertWalletsToFirestore(wallet: List<Wallet>) {
+        firestore.collection("wallets")
+            .add(wallet)
+            .addOnSuccessListener { documentReference ->
+                Log.d("WalletRepo", "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("WalletRepo", "Error adding document", e)
+            }
+    }
+
+    fun getWalletsFromFirestore() {
+        firestore.collection("wallets")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("WalletRepo", "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("WalletRepo", "Error getting documents.", exception)
+            }
+    }
+
     override suspend fun getWalletWithReportById(walletName: String): Flow<Wallet> = flow {
         walletDao.getWalletWithReportByName(walletName).collect {
             emit( it.toDomain() )

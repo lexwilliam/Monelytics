@@ -1,10 +1,8 @@
 package com.lexwilliam.moneymanager.data.model
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDate
-import java.util.*
 
 @Entity(tableName = "wallet_report")
 data class ReportEntity(
@@ -18,5 +16,5 @@ data class ReportEntity(
 )
 
 enum class ReportType {
-    Expense, Income, Default
+    Expense, Income, Default, RecurringExpense, RecurringIncome
 }

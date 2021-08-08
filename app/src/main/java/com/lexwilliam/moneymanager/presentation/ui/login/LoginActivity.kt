@@ -14,8 +14,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.lexwilliam.moneymanager.R
 import com.lexwilliam.moneymanager.presentation.MainActivity
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
-import com.lexwilliam.moneymanager.presentation.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 120
     }
 
-    private lateinit var mAuth: FirebaseAuth
+    @Inject lateinit var mAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        mAuth = FirebaseAuth.getInstance()
 
         setContent {
             MoneyManagerTheme {
@@ -65,14 +64,14 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java)!!
-                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+                    Log.d("TAG", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
-                    Log.w(TAG, "Google sign in failed", e)
+                    Log.w("TAG", "Google sign in failed", e)
                 }
             } else {
-                Log.w(TAG, exception.toString())
+                Log.w("TAG", exception.toString())
             }
         }
     }
@@ -83,13 +82,13 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
+                    Log.d("TAG", "signInWithCredential:success")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Log.w("TAG", "signInWithCredential:failure", task.exception)
                 }
             }
     }

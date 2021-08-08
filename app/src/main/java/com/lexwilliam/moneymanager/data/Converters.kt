@@ -1,11 +1,9 @@
 package com.lexwilliam.moneymanager.data
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.TypeConverter
 import com.lexwilliam.moneymanager.data.model.ReportType
+import com.lexwilliam.moneymanager.domain.model.TimePeriod
 import java.time.LocalDate
-import java.time.ZonedDateTime
-import java.util.*
 
 class Converters {
     @TypeConverter
@@ -16,6 +14,16 @@ class Converters {
     @TypeConverter
     fun watchStatusToString(status: ReportType?): String? {
         return status?.name
+    }
+
+    @TypeConverter
+    fun fromTimePeriod(value: String?): TimePeriod? {
+        return value?.let { enumValueOf<TimePeriod>(it) }
+    }
+
+    @TypeConverter
+    fun timePeriodToString(period: TimePeriod?): String? {
+        return period?.name
     }
 
     @TypeConverter

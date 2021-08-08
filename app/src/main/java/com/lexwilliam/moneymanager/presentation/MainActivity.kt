@@ -36,6 +36,8 @@ class MainActivity : ComponentActivity() {
             finish()
         }
 
+        mAuth.useEmulator("10.0.2.2", 9099)
+
         setContent {
             MoneyManagerTheme {
                 MoneyManagerApp(
