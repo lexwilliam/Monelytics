@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IWalletRepository {
 
+    suspend fun getWalletsFromFirestore(): Flow<Any?>
+
     suspend fun getAllWalletWithReport(): Flow<List<Wallet>>
 
     suspend fun getWalletWithReportById(walletName: String): Flow<Wallet>

@@ -3,6 +3,8 @@ package com.lexwilliam.moneymanager.presentation.ui.report
 import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
+import com.google.firebase.firestore.FirebaseFirestore
+import com.lexwilliam.moneymanager.data.mapper.toEntity
 import com.lexwilliam.moneymanager.data.model.ReportType
 import com.lexwilliam.moneymanager.domain.usecase.InsertReportUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel

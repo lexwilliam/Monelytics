@@ -1,5 +1,6 @@
 package com.lexwilliam.moneymanager.presentation.di
 
+import com.google.firebase.firestore.FirebaseFirestore
 import com.lexwilliam.moneymanager.data.dao.WalletDao
 import com.lexwilliam.moneymanager.data.repository.WalletRepository
 import dagger.Module

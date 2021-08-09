@@ -32,7 +32,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun longToLocalDate(date: LocalDate?): Long? {
+    fun localDateToLong(date: LocalDate?): Long? {
         return date?.toEpochDay()
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lexwilliam.moneymanager.domain.model.Wallet
 import com.lexwilliam.moneymanager.domain.usecase.GetAllReportUseCase
 import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletUseCase
+import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletsFromFirestore
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
 import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
@@ -13,6 +14,7 @@ import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class HomeViewModel
 @Inject constructor(
@@ -32,21 +35,12 @@ class HomeViewModel
         val message = ExceptionHandler.parse(exception)
     }
 
+
     private var _state = MutableStateFlow(HomeViewState())
     val state = _state.asStateFlow()
 
-    private var walletJob: Job? = null
-    private var reportJob: Job? = null
-
-    override fun onCleared() {
-        super.onCleared()
-        walletJob?.cancel()
-        reportJob?.cancel()
-    }
-
     init {
-        walletJob?.cancel()
-        walletJob = launchCoroutine {
+        viewModelScope.launch {
             getAllWalletUseCase.invoke().collect { results ->
                 if(results.isEmpty()) {
                     Log.d("TAG", "Get All Wallet Failed")
@@ -56,9 +50,6 @@ class HomeViewModel
                     _state.value = _state.value.copy(wallets = wallets)
                 }
             }
-        }
-        reportJob?.cancel()
-        reportJob = launchCoroutine {
             getAllReportUseCase.invoke().collect { results ->
                 if(results.isEmpty()) {
                     Log.d("TAG", "Get All Wallet Failed")

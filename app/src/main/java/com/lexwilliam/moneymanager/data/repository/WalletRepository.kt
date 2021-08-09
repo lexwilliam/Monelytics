@@ -1,46 +1,32 @@
 package com.lexwilliam.moneymanager.data.repository
 
 import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.lexwilliam.moneymanager.State
 import com.lexwilliam.moneymanager.data.dao.WalletDao
 import com.lexwilliam.moneymanager.data.mapper.toDomain
 import com.lexwilliam.moneymanager.data.mapper.toEntity
+import com.lexwilliam.moneymanager.data.mapper.toResponse
+import com.lexwilliam.moneymanager.data.model.WalletEntity
 import com.lexwilliam.moneymanager.domain.model.Report
 import com.lexwilliam.moneymanager.domain.repository.IWalletRepository
 import com.lexwilliam.moneymanager.domain.model.Wallet
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 class WalletRepository(
     private val walletDao: WalletDao
 ): IWalletRepository {
-    private val firestore = Firebase.firestore
 
-    fun insertWalletsToFirestore(wallet: List<Wallet>) {
-        firestore.collection("wallets")
-            .add(wallet)
-            .addOnSuccessListener { documentReference ->
-                Log.d("WalletRepo", "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("WalletRepo", "Error adding document", e)
-            }
-    }
-
-    fun getWalletsFromFirestore() {
-        firestore.collection("wallets")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("WalletRepo", "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("WalletRepo", "Error getting documents.", exception)
-            }
-    }
+    private val mWalletCollection = FirebaseFirestore.getInstance().collection("wallets")
+    private val mReportCollection = FirebaseFirestore.getInstance().collection("reports")
 
     override suspend fun getWalletWithReportById(walletName: String): Flow<Wallet> = flow {
         walletDao.getWalletWithReportByName(walletName).collect {
@@ -52,6 +38,10 @@ class WalletRepository(
         walletDao.getAllReport().collect {
             emit( it.map { it.toDomain() })
         }
+    }
+
+    override suspend fun getWalletsFromFirestore(): Flow<Any?> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getAllWalletWithReport(): Flow<List<Wallet>> = flow {
@@ -67,11 +57,30 @@ class WalletRepository(
     }
 
     override suspend fun insertWallet(wallet: Wallet): Flow<Long> = flow {
-        val affectedRow = walletDao.insertWallet(wallet.toEntity())
+        val walletEntity = wallet.toEntity()
+        mWalletCollection
+            .document(walletEntity.name)
+            .set(walletEntity)
+            .addOnSuccessListener {
+                Log.d("WalletRepo", "DocumentSnapshot added")
+            }
+            .addOnFailureListener { e ->
+                Log.w("WalletRepo", "Error adding document", e)
+            }
+        val affectedRow = walletDao.insertWallet(walletEntity)
         emit(affectedRow)
     }
 
     override suspend fun insertReport(report: Report): Flow<Long> = flow {
+        val reportEntity = report.toEntity()
+        mReportCollection
+            .add(reportEntity.toResponse())
+            .addOnSuccessListener { documentReference ->
+                Log.d("WalletRepo", "DocumentSnapshot added with ID: $documentReference")
+            }
+            .addOnFailureListener { e ->
+                Log.w("WalletRepo", "Error adding document", e)
+            }
         val affectedRow = walletDao.insertReport(report.toEntity())
         emit(affectedRow)
     }

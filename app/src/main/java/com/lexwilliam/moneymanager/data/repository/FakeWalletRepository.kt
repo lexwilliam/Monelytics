@@ -11,6 +11,10 @@ import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 
 class FakeWalletRepository(val walletList: MutableList<Wallet>? = mutableListOf()): IWalletRepository {
+    override suspend fun getWalletsFromFirestore(): Flow<Any?> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getAllWalletWithReport(): Flow<List<Wallet>> {
         TODO("Not yet implemented")
     }
