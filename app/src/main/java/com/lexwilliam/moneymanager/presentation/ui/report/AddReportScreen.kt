@@ -1,33 +1,27 @@
 package com.lexwilliam.moneymanager.presentation.ui.report
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.presentation.model.ReportCategory
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
-import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
-import com.lexwilliam.moneymanager.presentation.ui.component.ReportIcon
+import com.lexwilliam.local.model.ReportType
+import com.lexwilliam.moneymanager.model.ReportCategory
+import com.lexwilliam.moneymanager.model.ReportPresentation
+import com.lexwilliam.designsystem.component.DoneButton
+import com.lexwilliam.designsystem.component.ReportIcon
 import java.time.LocalDate
 
 @ExperimentalComposeUiApi

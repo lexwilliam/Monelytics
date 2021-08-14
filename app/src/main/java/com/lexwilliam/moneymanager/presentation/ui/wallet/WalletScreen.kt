@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,12 +23,12 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
-import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
-import com.lexwilliam.moneymanager.presentation.ui.component.MyBarChart
-import com.lexwilliam.moneymanager.presentation.ui.component.RoundedBoxContainer
+import com.lexwilliam.local.model.ReportType
+import com.lexwilliam.moneymanager.model.ReportPresentation
+import com.lexwilliam.moneymanager.model.WalletPresentation
+import com.lexwilliam.designsystem.component.HistoryList
+import com.lexwilliam.designsystem.component.MyBarChart
+import com.lexwilliam.designsystem.component.RoundedBoxContainer
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.*
 

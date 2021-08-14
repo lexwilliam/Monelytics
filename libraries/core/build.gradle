@@ -1,0 +1,9 @@
+apply from: "$rootDir/config/dependencies/feature_dependencies.gradle"
+
+dependencies {
+    implementation Deps.android.ktx
+    implementation Deps.android.material
+    implementation Deps.coroutines.core
+    implementation Deps.hilt.hilt
+    implementation Deps.hilt.hiltCompiler
+}

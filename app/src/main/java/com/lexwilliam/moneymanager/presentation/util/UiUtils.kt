@@ -1,20 +1,15 @@
 package com.lexwilliam.moneymanager.presentation.util
 
-import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.presentation.model.ReportCategory
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
-import com.lexwilliam.moneymanager.presentation.ui.theme.*
+import com.lexwilliam.local.model.ReportType
+import com.lexwilliam.moneymanager.model.ReportCategory
+import com.lexwilliam.moneymanager.model.WalletPresentation
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.*
 
 val cardWidth = 200.dp
 val cardHeight = 270.dp

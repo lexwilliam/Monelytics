@@ -11,14 +11,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.presentation.ui.login.LoginActivity
+import com.lexwilliam.login.LoginActivity
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import com.google.firebase.firestore.CollectionReference
-import com.lexwilliam.moneymanager.data.model.WalletEntity
-import com.lexwilliam.moneymanager.domain.model.Wallet
-import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletsFromFirestore
 
 
 @AndroidEntryPoint
@@ -38,7 +34,7 @@ class MainActivity : ComponentActivity() {
         val currentUser = firebaseAuth.currentUser
 
         if(currentUser == null) {
-            val loginIntent = Intent(this, LoginActivity::class.java)
+            val loginIntent = Intent(this, com.lexwilliam.login.LoginActivity::class.java)
             startActivity(loginIntent)
             finish()
         }

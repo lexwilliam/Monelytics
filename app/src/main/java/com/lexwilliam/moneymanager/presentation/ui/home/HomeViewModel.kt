@@ -1,29 +1,21 @@
 package com.lexwilliam.moneymanager.presentation.ui.home
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lexwilliam.moneymanager.domain.model.Wallet
-import com.lexwilliam.moneymanager.domain.usecase.GetAllReportUseCase
-import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletUseCase
-import com.lexwilliam.moneymanager.domain.usecase.GetAllWalletsFromFirestore
+import com.lexwilliam.domain.usecase.GetAllReportUseCase
+import com.lexwilliam.domain.usecase.GetAllWalletUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
-import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+import com.lexwilliam.moneymanager.model.ReportPresentation
+import com.lexwilliam.moneymanager.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 @HiltViewModel
 class HomeViewModel
 @Inject constructor(

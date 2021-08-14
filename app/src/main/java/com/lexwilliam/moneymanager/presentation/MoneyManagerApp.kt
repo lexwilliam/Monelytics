@@ -28,6 +28,7 @@ import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.AddWalletViewModel
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletScreen
 import com.lexwilliam.moneymanager.presentation.ui.wallet.WalletViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalPagerApi
 @ExperimentalMaterialApi

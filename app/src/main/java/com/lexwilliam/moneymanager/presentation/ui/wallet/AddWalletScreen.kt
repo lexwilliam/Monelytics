@@ -18,8 +18,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
-import com.lexwilliam.moneymanager.presentation.ui.component.DoneButton
+import com.lexwilliam.moneymanager.model.WalletPresentation
+import com.lexwilliam.designsystem.component.DoneButton
 import com.lexwilliam.moneymanager.presentation.util.walletIconResources
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

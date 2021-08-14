@@ -1,9 +1,9 @@
 package com.lexwilliam.moneymanager.presentation.util
 
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+import com.lexwilliam.local.model.ReportType
+import com.lexwilliam.moneymanager.model.ReportPresentation
+import com.lexwilliam.moneymanager.model.WalletPresentation
 import java.time.LocalDate
 
 val fakeReport = ReportPresentation(

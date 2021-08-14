@@ -8,8 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.coil.rememberCoilPainter
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
-import com.lexwilliam.moneymanager.presentation.ui.component.HistoryList
+import com.lexwilliam.moneymanager.model.ReportPresentation
+import com.lexwilliam.moneymanager.model.WalletPresentation
+import com.lexwilliam.designsystem.component.HistoryList
 import com.lexwilliam.moneymanager.presentation.ui.home.HomeViewModel
 import com.lexwilliam.moneymanager.presentation.ui.theme.MoneyManagerTheme
 import com.lexwilliam.moneymanager.presentation.util.*

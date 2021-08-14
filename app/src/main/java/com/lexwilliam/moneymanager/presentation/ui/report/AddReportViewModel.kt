@@ -1,18 +1,12 @@
 package com.lexwilliam.moneymanager.presentation.ui.report
 
 import android.util.Log
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
-import com.google.firebase.firestore.FirebaseFirestore
-import com.lexwilliam.moneymanager.data.mapper.toEntity
-import com.lexwilliam.moneymanager.data.model.ReportType
-import com.lexwilliam.moneymanager.domain.usecase.InsertReportUseCase
+import com.lexwilliam.domain.usecase.InsertReportUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
 import com.lexwilliam.moneymanager.presentation.mapper.toDomain
-import com.lexwilliam.moneymanager.presentation.model.ReportCategory
-import com.lexwilliam.moneymanager.presentation.model.ReportPresentation
+import com.lexwilliam.moneymanager.model.ReportPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
-import com.lexwilliam.moneymanager.presentation.util.categoryList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job

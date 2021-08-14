@@ -1,0 +1,38 @@
+apply from: "$rootDir/config/dependencies/feature_dependencies.gradle"
+apply plugin: "kotlin-kapt"
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation": "$projectDir/schemas".toString(),
+                        "room.incremental"   : "true"
+                ]
+            }
+        }
+    }
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+}
+
+dependencies {
+    implementation project(":libraries:core")
+    implementation project(":data:repository")
+
+    implementation Deps.hilt.hilt
+    implementation Deps.hilt.hiltCompiler
+    implementation Deps.android.room.runtime
+    implementation Deps.android.room.ktx
+    implementation project(path: ':domain')
+    kapt Deps.android.room.compiler
+
+    androidTestImplementation Deps.test.runner
+    androidTestImplementation Deps.test.room
+
+    testImplementation Deps.test.junit
+    testImplementation Deps.test.mockito
+    testImplementation Deps.coroutines.test
+
+}

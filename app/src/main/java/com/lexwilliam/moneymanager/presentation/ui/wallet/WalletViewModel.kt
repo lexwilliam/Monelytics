@@ -2,17 +2,15 @@ package com.lexwilliam.moneymanager.presentation.ui.wallet
 
 import androidx.lifecycle.SavedStateHandle
 import com.lexwilliam.moneymanager.R
-import com.lexwilliam.moneymanager.domain.usecase.GetWalletByIdUseCase
+import com.lexwilliam.domain.usecase.GetWalletByIdUseCase
 import com.lexwilliam.moneymanager.presentation.base.BaseViewModel
-import com.lexwilliam.moneymanager.presentation.mapper.toPresentation
-import com.lexwilliam.moneymanager.presentation.model.WalletPresentation
+import com.lexwilliam.moneymanager.model.WalletPresentation
 import com.lexwilliam.moneymanager.presentation.util.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
